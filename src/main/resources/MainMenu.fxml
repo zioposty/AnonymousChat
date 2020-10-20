@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="424.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adc.AnonymousChat.MainMenuController">
+
+    <Label id="mainTitle" text="Hello world!" />
+    <Label id="subTitle" text="This is a simple demo application." />
+    <Button fx:id="mainButton" onAction="#buttonClicked" text="Click me!" textOverrun="LEADING_WORD_ELLIPSIS" />
+   <effect>
+      <Blend />
+   </effect>
+
+</VBox>

@@ -24,11 +24,10 @@ public class MainMenuController {
 
     //iniettato tramite id
     @FXML
-    public Button mainButton;
+    public Button beginButton;
 
     public void buttonClicked(ActionEvent actionEvent) {
         speak("Welcome");
-        mainButton.setText("Click me again!");
     }
 
 }

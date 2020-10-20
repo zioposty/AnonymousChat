@@ -17,6 +17,12 @@ public class MainMenu extends Application {
         URL xmlUrl = getClass().getResource("/MainMenu.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
+        primaryStage.setTitle("Anonymous Chat - Luca Postiglione");
+        primaryStage.setMaxHeight(600.0);
+        primaryStage.setMaxWidth(800.0);
+        primaryStage.setMinHeight(600.0);
+        primaryStage.setMinWidth(800.0);
+
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

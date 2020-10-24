@@ -8,7 +8,7 @@
 
 
 .button{
-
+    -fx-alignment: center;
     -fx-font-size: 20pt;
     -fx-font-family: Impact;
 
@@ -22,3 +22,4 @@
     -fx-background-color: black;
     -fx-text-fill: white;
 }
+

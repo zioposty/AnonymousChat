@@ -5,6 +5,9 @@ import com.sun.speech.freetts.VoiceManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainMenuController {
 
@@ -26,8 +29,11 @@ public class MainMenuController {
     @FXML
     public Button beginButton;
 
-    public void buttonClicked(ActionEvent actionEvent) {
+    public void buttonClicked(ActionEvent actionEvent) throws IOException {
         speak("Welcome");
+
+        SceneController screenController = SceneController.getInstance();
+        screenController.activate("choicemenu", (Stage) beginButton.getScene().getWindow());
     }
 
 }

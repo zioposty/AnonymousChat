@@ -22,8 +22,13 @@ public class MainMenu extends Application {
         primaryStage.setMaxWidth(800.0);
         primaryStage.setMinHeight(600.0);
         primaryStage.setMinWidth(800.0);
+        Scene scene = new Scene(root);
 
-        primaryStage.setScene(new Scene(root));
+        SceneController screenController = SceneController.getInstance();
+        screenController.addScreen("mainmenu", FXMLLoader.load(getClass().getResource( "/MainMenu.fxml" )));
+        screenController.addScreen("choicemenu", FXMLLoader.load(getClass().getResource( "/ChoiceMenu.fxml" )));
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 }

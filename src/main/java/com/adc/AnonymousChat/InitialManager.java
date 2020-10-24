@@ -1,5 +1,6 @@
 package com.adc.AnonymousChat;
 
+import com.adc.AnonymousChat.utilities.SceneController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class MainMenu extends Application {
+public class InitialManager extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -25,8 +26,9 @@ public class MainMenu extends Application {
         Scene scene = new Scene(root);
 
         SceneController screenController = SceneController.getInstance();
-        screenController.addScreen("mainmenu", FXMLLoader.load(getClass().getResource( "/MainMenu.fxml" )));
-        screenController.addScreen("choicemenu", FXMLLoader.load(getClass().getResource( "/ChoiceMenu.fxml" )));
+        screenController.addScene("mainmenu", FXMLLoader.load(getClass().getResource( "/MainMenu.fxml" )));
+        screenController.addScene("choicemenu", FXMLLoader.load(getClass().getResource( "/ChoiceMenu.fxml" )));
+        screenController.addScene("chatview", FXMLLoader.load(getClass().getResource("/ChatView.fxml")));
 
         primaryStage.setScene(scene);
         primaryStage.show();

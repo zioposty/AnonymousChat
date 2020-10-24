@@ -1,4 +1,4 @@
-package com.adc.AnonymousChat;
+package com.adc.AnonymousChat.utilities;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,15 +26,15 @@ public class SceneController {
     }
 
 
-    protected void addScreen(String name, Pane pane){
+    public void addScene(String name, Pane pane){
         screenMap.put(name, pane);
     }
 
-    protected void removeScreen(String name){
+    public void removeScene(String name){
         screenMap.remove(name);
     }
 
-    protected void activate(String name, Stage stage){
+    public void activate(String name, Stage stage){
         Pane p = screenMap.get(name);
         Parent root = p;
         Scene scene = new Scene(root);

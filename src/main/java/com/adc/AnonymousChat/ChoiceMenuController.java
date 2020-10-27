@@ -1,6 +1,6 @@
 package com.adc.AnonymousChat;
 
-import com.adc.AnonymousChat.utilities.SceneController;
+import com.adc.AnonymousChat.utilities.SceneManager;
 import com.adc.AnonymousChat.utilities.VoiceFreeTTS;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class ChoiceMenuController {
 
     private static VoiceFreeTTS voice = VoiceFreeTTS.getInstance();
-    private static SceneController screenController = SceneController.getInstance();
+    private static SceneManager screenController = SceneManager.getInstance();
 
     public void createRoom(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();

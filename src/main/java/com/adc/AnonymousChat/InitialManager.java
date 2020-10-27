@@ -1,6 +1,6 @@
 package com.adc.AnonymousChat;
 
-import com.adc.AnonymousChat.utilities.SceneController;
+import com.adc.AnonymousChat.utilities.SceneManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,8 +24,7 @@ public class InitialManager extends Application {
         primaryStage.setMinHeight(600.0);
         primaryStage.setMinWidth(800.0);
         Scene scene = new Scene(root);
-
-        SceneController screenController = SceneController.getInstance();
+        SceneManager screenController = SceneManager.getInstance();
         screenController.addScene("mainmenu", FXMLLoader.load(getClass().getResource( "/MainMenu.fxml" )));
         screenController.addScene("choicemenu", FXMLLoader.load(getClass().getResource( "/ChoiceMenu.fxml" )));
         screenController.addScene("chatview", FXMLLoader.load(getClass().getResource("/ChatView.fxml")));

@@ -1,31 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="571.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adc.AnonymousChat.ChatViewController">
+<AnchorPane prefHeight="570.0" prefWidth="760.0" style=" -fx-background-position: right bottom;" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adc.AnonymousChat.ChatViewController">
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="765.0">
         <menus>
           <Menu mnemonicParsing="false" text="Room">
             <items>
-              <MenuItem mnemonicParsing="false" text="Change" />
-                  <MenuItem mnemonicParsing="false" text="Back" />
+              <MenuItem mnemonicParsing="false" text="Change room" />
+                  <MenuItem mnemonicParsing="false" text="Quit room" />
             </items>
           </Menu>
         </menus>
          <contextMenu>
             <ContextMenu>
               <items>
-                <MenuItem mnemonicParsing="false" text="sxcx" />
-                  <MenuItem mnemonicParsing="false" text="ewwerewr" />
+                <MenuItem mnemonicParsing="false" text="Unspecified Action" />
               </items>
             </ContextMenu>
          </contextMenu>
       </MenuBar>
+      <TextArea layoutX="34.0" layoutY="109.0" prefHeight="392.0" prefWidth="418.0" />
+      <Label layoutX="34.0" layoutY="61.0" prefHeight="40.0" prefWidth="227.0" text="Room Name">
+         <font>
+            <Font name="Impact" size="29.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="467.0" layoutY="109.0" prefHeight="106.0" prefWidth="275.0" />
+      <Label layoutX="467.0" layoutY="74.0" prefHeight="28.0" prefWidth="103.0" text="Message">
+         <font>
+            <Font name="Impact" size="23.0" />
+         </font>
+      </Label>
+      <Button layoutX="467.0" layoutY="222.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="122.0" text="Send&#10;Message" />
+      <ComboBox layoutX="539.0" layoutY="415.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

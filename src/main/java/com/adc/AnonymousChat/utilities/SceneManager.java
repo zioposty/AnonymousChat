@@ -7,21 +7,24 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
-public class SceneController {
+/*
+    Componente per gestire tutto ciò che serve per il 'cambio di scena'
+ */
+public class SceneManager {
 
     private HashMap<String, Pane> screenMap;
 
-    private static SceneController instance = null;
+    private static SceneManager instance = null;
 
-    public static SceneController getInstance()
+    public static SceneManager getInstance()
     {
         if (instance == null) {
-            instance = new SceneController();
+            instance = new SceneManager();
         }
         return instance;
     }
 
-    private SceneController() {
+    private SceneManager() {
         screenMap = new HashMap<>();
     }
 

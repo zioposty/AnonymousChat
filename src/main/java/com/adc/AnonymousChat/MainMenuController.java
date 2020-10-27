@@ -1,6 +1,6 @@
 package com.adc.AnonymousChat;
 
-import com.adc.AnonymousChat.utilities.SceneController;
+import com.adc.AnonymousChat.utilities.SceneManager;
 import com.adc.AnonymousChat.utilities.VoiceFreeTTS;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +23,7 @@ public class MainMenuController {
 
         voice.speak("Welcome");
 
-        SceneController screenController = SceneController.getInstance();
+        SceneManager screenController = SceneManager.getInstance();
         screenController.activate("choicemenu", (Stage) beginButton.getScene().getWindow());
     }
 

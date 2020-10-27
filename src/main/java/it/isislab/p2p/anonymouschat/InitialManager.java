@@ -1,6 +1,6 @@
-package com.adc.AnonymousChat;
+package it.isislab.p2p.anonymouschat;
 
-import com.adc.AnonymousChat.utilities.SceneManager;
+import it.isislab.p2p.anonymouschat.utilities.SceneManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

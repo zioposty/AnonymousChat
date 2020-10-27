@@ -1,4 +1,4 @@
-package com.adc.AnonymousChat.utilities;
+package it.isislab.p2p.anonymouschat.utilities;
 
 public class PeerManager {
 

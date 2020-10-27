@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="570.0" prefWidth="760.0" style=" -fx-background-position: right bottom;" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adc.AnonymousChat.ChatViewController">
+<AnchorPane prefHeight="570.0" prefWidth="760.0" style=" -fx-background-position: right bottom;" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.ChatViewController">
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="765.0">
         <menus>

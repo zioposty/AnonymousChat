@@ -1,6 +1,6 @@
-package com.adc.AnonymousChat;
+package it.isislab.p2p.anonymouschat;
 
-import com.adc.AnonymousChat.utilities.PeerManager;
+import it.isislab.p2p.anonymouschat.utilities.PeerManager;
 import javafx.application.Application;
 
 import org.kohsuke.args4j.Option;

@@ -1,7 +1,7 @@
-package com.adc.AnonymousChat;
+package it.isislab.p2p.anonymouschat;
 
-import com.adc.AnonymousChat.utilities.SceneManager;
-import com.adc.AnonymousChat.utilities.VoiceFreeTTS;
+import it.isislab.p2p.anonymouschat.utilities.SceneManager;
+import it.isislab.p2p.anonymouschat.utilities.VoiceFreeTTS;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;

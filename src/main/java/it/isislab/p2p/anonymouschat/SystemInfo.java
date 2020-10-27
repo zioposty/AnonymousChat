@@ -1,4 +1,4 @@
-package com.adc.AnonymousChat;
+package it.isislab.p2p.anonymouschat;
 
 public class SystemInfo {
 

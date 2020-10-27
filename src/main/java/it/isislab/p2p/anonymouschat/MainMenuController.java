@@ -19,10 +19,10 @@ public class MainMenuController {
 
     public void buttonClicked(ActionEvent actionEvent) throws IOException {
 
-        VoiceFreeTTS voice = VoiceFreeTTS.getInstance();
+      /*  VoiceFreeTTS voice = VoiceFreeTTS.getInstance();
 
         voice.speak("Welcome");
-
+        */
         SceneManager screenController = SceneManager.getInstance();
         screenController.activate("choicemenu", (Stage) beginButton.getScene().getWindow());
     }

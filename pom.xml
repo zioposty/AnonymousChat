@@ -3,11 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.adc.AnonymousChat</groupId>
     <artifactId>AnonymousChat</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <name>P2P AnonymousChat Client</name>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <repositories>
@@ -20,14 +21,36 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib</artifactId>
-            <version>1.4.10</version>
+            <groupId>net.tomp2p</groupId>
+            <artifactId>tomp2p-all</artifactId>
+            <version>5.0-Beta8</version>
         </dependency>
 
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>args4j</groupId>
+            <artifactId>args4j</artifactId>
+            <version>2.33</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.beryx</groupId>
+            <artifactId>text-io</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.sociaal</groupId>
+            <artifactId>freetts</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
+            <artifactId>javafx-graphics</artifactId>
             <version>12</version>
         </dependency>
         <dependency>
@@ -35,60 +58,18 @@
             <artifactId>javafx-fxml</artifactId>
             <version>11.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.sociaal</groupId>
-            <artifactId>freetts</artifactId>
-            <version>1.2.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.tomp2p</groupId>
-            <artifactId>tomp2p-all</artifactId>
-            <version>5.0-Beta8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>args4j</groupId>
-            <artifactId>args4j</artifactId>
-            <version>2.33</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit47</artifactId>
-                        <version>3.0.0-M5</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.5.1</version>
                 <configuration>
-                    <release>11</release>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.1</version>
-                <configuration>
-                    <mainClass>com.adc.AnonymousChat.AppLauncher</mainClass>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -114,13 +95,6 @@
                 </executions>
             </plugin>
         </plugins>
-
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
     </build>
+
 </project>

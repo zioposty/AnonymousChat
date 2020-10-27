@@ -11,10 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="570.0" prefWidth="760.0" style=" -fx-background-position: right bottom;" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.ChatViewController">
+<AnchorPane prefHeight="566.0" prefWidth="791.0" style=" -fx-background-position: right bottom;" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.ChatViewController">
    <children>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="765.0">
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="791.0">
         <menus>
           <Menu mnemonicParsing="false" text="Room">
             <items>
@@ -43,7 +42,7 @@
             <Font name="Impact" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="467.0" layoutY="222.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="122.0" text="Send&#10;Message" />
+      <Button layoutX="467.0" layoutY="222.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="122.0" text="Send" />
       <ComboBox layoutX="539.0" layoutY="415.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

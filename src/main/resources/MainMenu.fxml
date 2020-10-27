@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="517.0" prefWidth="539.0" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.MainMenuController">
+<AnchorPane  styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.MainMenuController">
    <children>
       <Label layoutX="274.0" layoutY="54.0" prefHeight="132.0" prefWidth="240.0" text="Welcome to&#10;Anonymous Chat" textAlignment="CENTER" wrapText="true">
          <font>

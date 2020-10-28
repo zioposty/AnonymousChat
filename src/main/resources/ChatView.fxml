@@ -30,7 +30,7 @@
             </ContextMenu>
          </contextMenu>
       </MenuBar>
-      <TextArea layoutX="34.0" layoutY="109.0" prefHeight="392.0" prefWidth="418.0" />
+      <TextArea editable="false" layoutX="34.0" layoutY="109.0" prefHeight="392.0" prefWidth="418.0" />
       <Label layoutX="34.0" layoutY="61.0" prefHeight="40.0" prefWidth="227.0" text="Room Name">
          <font>
             <Font name="Impact" size="29.0" />

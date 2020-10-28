@@ -10,7 +10,6 @@
 .button{
     -fx-alignment: center;
     -fx-font-size: 20pt;
-    -fx-font-family: Impact;
 
     -fx-background-color: #FFFFFF;
     -fx-border: 4px 4px 4px 4px;
@@ -23,3 +22,6 @@
     -fx-text-fill: white;
 }
 
+.label, .button {
+    -fx-font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+}

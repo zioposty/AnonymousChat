@@ -40,5 +40,5 @@ public interface AnonymousChat {
      * @param _text_message a message String value.
      * @return true if send success, false otherwise.
      */
-    public boolean sendMessage(String _room_name, String _text_message);
+    public boolean sendMessage(String _room_name, Object _text_message);
 }

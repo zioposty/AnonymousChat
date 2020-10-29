@@ -17,7 +17,7 @@ import net.tomp2p.rpc.ObjectDataReply;
 import net.tomp2p.storage.Data;
 
 
-class AnonymousChatImpl implements AnonymousChat {
+public class AnonymousChatImpl implements AnonymousChat {
 
     final private Peer peer;
     final private PeerDHT _dht;
@@ -113,4 +113,12 @@ class AnonymousChatImpl implements AnonymousChat {
         }
         return false;
     }
+
+    public boolean leaveNetwork() {
+
+        for(String room: new ArrayList<String>(chat_joined)) leaveRoom(room);
+        _dht.peer().announceShutdown().start().awaitUninterruptibly();
+        return true;
+    }
+
 }

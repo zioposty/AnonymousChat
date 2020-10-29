@@ -69,7 +69,7 @@ public class PeerManager {
         return instance;
     }
 
-    public AnonymousChat getPeer(){ return peer;}
+    public AnonymousChatImpl getPeer(){ return peer;}
 
     public HashMap getChat() { return chatJoined; }
     public void addChat(String roomName, TextArea chat) { chatJoined.put(roomName, chat); }

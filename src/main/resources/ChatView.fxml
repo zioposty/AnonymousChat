@@ -20,7 +20,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Room">
             <items>
-              <MenuItem fx:id="menuCreateRoom" mnemonicParsing="false" text="Create Room" />
+              <MenuItem fx:id="menuCreateRoom" mnemonicParsing="false" text="Create Room" onAction="#createRoom" />
                   <MenuItem fx:id="menuJoinRoom" mnemonicParsing="false" text="Join new Room"  onAction="#joinRoom"/>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuQuit" mnemonicParsing="false" text="Quit AnonymousChat" onAction="#closeApplication" />

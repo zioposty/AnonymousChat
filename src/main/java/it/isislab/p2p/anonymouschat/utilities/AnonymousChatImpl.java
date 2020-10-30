@@ -86,7 +86,23 @@ public class AnonymousChatImpl implements AnonymousChat {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean leaveRoom(String _room_name) {
+        try {
+            FutureGet futureGet = _dht.get(Number160.createHash(_room_name)).start();
+            futureGet.awaitUninterruptibly();
+            if (futureGet.isSuccess()) {
+                if(futureGet.isEmpty() ) return false;
+                HashSet<PeerAddress> peers_on_topic;
+                peers_on_topic = (HashSet<PeerAddress>) futureGet.dataMap().values().iterator().next().object();
+                peers_on_topic.remove(_dht.peer().peerAddress());
+                _dht.put(Number160.createHash(_room_name)).data(new Data(peers_on_topic)).start().awaitUninterruptibly();
+                chat_joined.remove(_room_name);
+                return true;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

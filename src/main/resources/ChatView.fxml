@@ -21,20 +21,21 @@
           <Menu mnemonicParsing="false" text="Room">
             <items>
               <MenuItem fx:id="menuCreateRoom" mnemonicParsing="false" text="Create Room" />
-                  <MenuItem fx:id="menuJoinRoom" mnemonicParsing="false" text="Join new Room" />
+                  <MenuItem fx:id="menuJoinRoom" mnemonicParsing="false" text="Join new Room"  onAction="#joinRoom"/>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="menuQuit" mnemonicParsing="false" text="Quit AnonymousChat" onAction="#closeApplication" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane layoutX="34.0" layoutY="109.0">
+      <TabPane fx:id="chatTabs" layoutX="34.0" layoutY="109.0">
          <tabs>
-            <Tab text="chat 1">
+           <!--  Tab model
+           <Tab text="chat 1">
                <content>
                   <TextArea editable="false" prefHeight="392.0" prefWidth="418.0" />
                </content>
-            </Tab>
+            </Tab> -->
          </tabs>
       </TabPane>
       <Label layoutX="34.0" layoutY="61.0" prefHeight="40.0" prefWidth="227.0" text="Room Name">

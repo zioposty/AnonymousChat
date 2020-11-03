@@ -62,6 +62,7 @@ public class ChatViewController {
     }
 
 
+    @SuppressWarnings("Duplicates")
     private boolean confirmJoinRoom(String name){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Join room");

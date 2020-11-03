@@ -24,7 +24,9 @@ public class MainMenuController {
         voice.speak("Welcome");
         */
         SceneManager screenController = SceneManager.getInstance();
-        screenController.activate("choicemenu", (Stage) beginButton.getScene().getWindow());
+//        screenController.activate("choicemenu", (Stage) beginButton.getScene().getWindow());
+        screenController.activate("chatview", (Stage) beginButton.getScene().getWindow());
+
     }
 
 }

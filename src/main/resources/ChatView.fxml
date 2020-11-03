@@ -7,28 +7,26 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="566.0" prefWidth="791.0"
-            style=" -fx-background-position: right bottom;" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.ChatViewController">
+<AnchorPane prefHeight="566.0" prefWidth="791.0" style=" -fx-background-position: right bottom;" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.ChatViewController">
    <children>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="791.0">
+      <MenuBar layoutY="2.0" prefWidth="791.0" prefHeight="25.0" >
         <menus>
           <Menu mnemonicParsing="false" text="Room">
             <items>
-              <MenuItem fx:id="menuCreateRoom" mnemonicParsing="false" text="Create Room" onAction="#createRoom" />
-                  <MenuItem fx:id="menuJoinRoom" mnemonicParsing="false" text="Join new Room"  onAction="#joinRoom"/>
+              <MenuItem fx:id="menuCreateRoom" mnemonicParsing="false" onAction="#createRoom" text="Create Room" />
+                  <MenuItem fx:id="menuJoinRoom" mnemonicParsing="false" onAction="#joinRoom" text="Join new Room" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menuQuit" mnemonicParsing="false" text="Quit AnonymousChat" onAction="#closeApplication" />
+                  <MenuItem fx:id="menuQuit" mnemonicParsing="false" onAction="#closeApplication" text="Quit AnonymousChat" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane fx:id="chatTabs" layoutX="34.0" layoutY="109.0">
+      <TabPane fx:id="chatTabs" layoutX="34.0" layoutY="109.0" maxWidth="420.0">
          <tabs>
            <!--  Tab model
            <Tab text="chat 1">

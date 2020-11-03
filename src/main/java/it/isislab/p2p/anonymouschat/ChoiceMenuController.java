@@ -34,7 +34,7 @@ public class ChoiceMenuController {
             alert.getButtonTypes().setAll(yes, no);
             Optional<ButtonType> result = alert.showAndWait();
             if(result.get() == yes){
-
+                
             }
         }
         else{

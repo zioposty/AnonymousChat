@@ -24,7 +24,7 @@
                         <Font name="Arial Black" size="17.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="181.0" />
+                  <TextField fx:id="roomName_txt" prefHeight="25.0" prefWidth="181.0" />
                </children>
             </HBox>
          </children>
@@ -36,6 +36,5 @@
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#joinRoom" prefHeight="25.0" prefWidth="130.0" text="Join" />
          </children>
       </TextFlow>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="91.0" prefWidth="148.0" text="Illegal Operation:&#10;" textFill="RED" visible="false" />
    </children>
 </VBox>

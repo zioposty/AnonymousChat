@@ -62,7 +62,7 @@ public class ChatViewController {
     }
 
 
-    public boolean confirmJoinRoom(String name){
+    private boolean confirmJoinRoom(String name){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Join room");
         alert.setHeaderText("Do you wonna join the created room: " + name);
@@ -88,7 +88,7 @@ public class ChatViewController {
         if(result.isPresent()) {
             String roomName = result.get();
                 //if(manager.getPeer().createRoom(roomName))
-                if(false)
+                if(true)
                     if(confirmJoinRoom(roomName)){
                         addTabChat(roomName);
                     }

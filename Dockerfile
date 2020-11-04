@@ -18,6 +18,6 @@ COPY --from=1 /app/target/ac-1.0-jar-with-dependencies.jar /app
 RUN apt-get update && apt-get install libgtk-3-0 libglu1-mesa xvfb -y && apt-get update
 #CMD java -jar ac-1.0-jar-with-dependencies.jar -m $MASTERIP -id $ID
 ADD run.sh /run.sh
-RUN chmod a+x /run.sh
+#RUN chmod a+x /run.sh
 #CMD /run.sh
 # -e DISPLAY=172.18.15.17:0.0      da aggiungere al run

@@ -16,7 +16,6 @@ COPY --from=1 /app/target/ac-1.0-jar-with-dependencies.jar /app
 
 #RUN apt-get update && apt-get install -y --no-install-recommends openjfx && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install libgtk-3-0 libglu1-mesa xvfb -y && apt-get update
-VOLUME /tmp
 #CMD java -jar ac-1.0-jar-with-dependencies.jar -m $MASTERIP -id $ID
 ADD run.sh /run.sh
 RUN chmod a+x /run.sh

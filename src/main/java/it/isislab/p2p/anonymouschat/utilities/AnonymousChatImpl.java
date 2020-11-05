@@ -51,11 +51,13 @@ public class AnonymousChatImpl implements AnonymousChat {
     @Override
     public boolean createRoom(String _room_name) {
 
+
         try {
             FutureGet futureGet = _dht.get(Number160.createHash(_room_name)).start();
             futureGet.awaitUninterruptibly();
             if (futureGet.isSuccess() && futureGet.isEmpty())
                 _dht.put(Number160.createHash(_room_name)).data(new Data(new HashSet<PeerAddress>())).start().awaitUninterruptibly();
+            else return false;
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,6 +69,8 @@ public class AnonymousChatImpl implements AnonymousChat {
     @SuppressWarnings("unchecked")
     public boolean joinRoom(String _room_name) {
 
+        if(chat_joined.contains(_room_name)) return false;
+
         try {
             FutureGet futureGet = _dht.get(Number160.createHash(_room_name)).start();
             futureGet.awaitUninterruptibly();
@@ -77,6 +81,7 @@ public class AnonymousChatImpl implements AnonymousChat {
                 peers_on_topic.add(_dht.peer().peerAddress());
                 _dht.put(Number160.createHash(_room_name)).data(new Data(peers_on_topic)).start().awaitUninterruptibly();
                 chat_joined.add(_room_name);
+                System.out.println("Room joined :" + _room_name);
                 return true;
             }
         }catch (Exception e) {
@@ -98,6 +103,7 @@ public class AnonymousChatImpl implements AnonymousChat {
                 peers_on_topic.remove(_dht.peer().peerAddress());
                 _dht.put(Number160.createHash(_room_name)).data(new Data(peers_on_topic)).start().awaitUninterruptibly();
                 chat_joined.remove(_room_name);
+                System.out.println("Leaved: " + _room_name);
                 return true;
             }
         }catch (Exception e) {

@@ -73,5 +73,6 @@ public class PeerManager {
 
     public HashMap getChat() { return chatJoined; }
     public void addChat(String roomName, TextArea chat) { chatJoined.put(roomName, chat); }
+    public boolean isChatJoined(String chatName){   return chatJoined.containsKey((chatName)); }
     public void removeChat(String roomName){ chatJoined.remove(roomName); }
 }

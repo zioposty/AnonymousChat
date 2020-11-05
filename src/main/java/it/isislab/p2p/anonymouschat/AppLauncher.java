@@ -18,8 +18,12 @@ public class AppLauncher {
 
 
     public static void main(String[] args) {
+
         PeerManager peer = PeerManager.getInstance();
+        if(args.length > 0){ id = Integer.parseInt(args[0]); master = args[1]; }
         peer.init(id, master);
+        System.out.println(master + " " + id);
+
         Application.launch(InitialManager.class, args);
     }
 }

@@ -25,7 +25,7 @@ public class ChatViewController {
 
     public void closeApplication(ActionEvent actionEvent) {
 
-        //manager.getPeer().leaveNetwork();
+        manager.getPeer().leaveNetwork();
         System.exit(0);
     }
 
@@ -33,8 +33,8 @@ public class ChatViewController {
         Tab tab1 = (Tab) e.getSource();
         TextArea t = (TextArea) tab1.getContent().lookup("TextArea");
         manager.removeChat(t.getId());
-        //manager.getPeer().leaveRoom(t.getId());
-        System.out.println("Leaving " + t.getId());
+        manager.getPeer().leaveRoom(t.getId());
+        //System.out.println("Leaving " + t.getId());
         System.out.println(manager.getChat().toString());
     }
 
@@ -47,8 +47,20 @@ public class ChatViewController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String roomName = result.get();
-            //if(manager.getPeer().joinRoom(roomName))
-            if (true)
+
+            if(manager.isChatJoined(roomName)){
+                for(Tab t: chatTabs.getTabs())
+                {
+                    if(t.getId().equals(roomName)) {
+                        chatTabs.getSelectionModel().select(t);
+                        break;
+                    }
+
+                }
+            }
+
+            if(manager.getPeer().joinRoom(roomName))
+            //if (true)
                 addTabChat(roomName);
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -88,8 +100,8 @@ public class ChatViewController {
         Optional<String> result =  dialog.showAndWait();
         if(result.isPresent()) {
             String roomName = result.get();
-                //if(manager.getPeer().createRoom(roomName))
-                if(true)
+                if(manager.getPeer().createRoom(roomName))
+                //if(true)
                     if(confirmJoinRoom(roomName)){
                         addTabChat(roomName);
                     }

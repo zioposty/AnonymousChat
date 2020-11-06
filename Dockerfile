@@ -16,6 +16,6 @@ COPY --from=1 /app/target/ac-1.0-jar-with-dependencies.jar /app
 
 RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/*
 RUN apt-get remove nvidia*
-CMD java -jar ac-1.0-jar-with-dependencies.jar -m $MASTERIP -id $ID
+CMD java -jar ac-1.0-jar-with-dependencies.jar $ID $MASTER
 
 # -e DISPLAY=192.168.47.33:0.0      da aggiungere al run

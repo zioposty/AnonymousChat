@@ -8,19 +8,25 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 public class ChatViewController {
 
     public MenuItem menuQuit;
     public TabPane chatTabs;
+    public TextArea messageField;
 
     private PeerManager manager = PeerManager.getInstance();
     private final double[] CHAT_SIZE = { 392.0, 418.0 };  //height, width
 
     //----------
 
-    public void publishMessage(TextArea chat, MessageP2P message){}
+    public void publishMessage(TextArea chat, MessageP2P message){
+
+        chat.appendText("\n" + message);
+
+    }
 
 
     public void closeApplication(ActionEvent actionEvent) {
@@ -47,23 +53,31 @@ public class ChatViewController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String roomName = result.get();
-
             if(manager.isChatJoined(roomName)){
+
                 for(Tab t: chatTabs.getTabs())
                 {
-                    if(t.getId().equals(roomName)) {
+                    if(t.getText().equals(roomName)) {
                         chatTabs.getSelectionModel().select(t);
                         break;
                     }
 
                 }
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("ALREADY JOINED");
+                alert.setHeaderText("Operation failed");
+                alert.setContentText("You have already joined  the chat! You can't do it double");
+
+                alert.showAndWait();
+                return;
             }
 
             if(manager.getPeer().joinRoom(roomName))
             //if (true)
                 addTabChat(roomName);
             else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Operation failed");
                 alert.setContentText("Something went wrong, maybe the room doesn't exist");
@@ -115,7 +129,7 @@ public class ChatViewController {
                     }
                 else
                 {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Operation failed");
                     alert.setContentText("Something went wrong, maybe the name isn't unique");
@@ -158,5 +172,12 @@ public class ChatViewController {
                 */
 
 
+    }
+
+    public void sendMessage(ActionEvent actionEvent) {
+        String mss = messageField.getText();
+        MessageP2P message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
+        System.out.println("Sending: " + message.getMessage() + " to " + message.getRoom());
+        System.out.println( manager.getPeer().sendMessage(message.getRoom(), message));
     }
 }

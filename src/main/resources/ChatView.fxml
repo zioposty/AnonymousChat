@@ -41,13 +41,13 @@
             <Font name="Impact" size="29.0" />
          </font>
       </Label>
-      <TextArea layoutX="467.0" layoutY="109.0" prefHeight="106.0" prefWidth="275.0" />
+      <TextArea layoutX="467.0" layoutY="109.0" prefHeight="106.0" prefWidth="275.0" fx:id="messageField"/>
       <Label layoutX="467.0" layoutY="74.0" prefHeight="28.0" prefWidth="103.0" text="Message">
          <font>
             <Font name="Impact" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="467.0" layoutY="222.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="122.0" text="Send" />
+      <Button layoutX="467.0" layoutY="222.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="122.0" text="Send"  onAction="#sendMessage"/>
       <ComboBox layoutX="539.0" layoutY="415.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

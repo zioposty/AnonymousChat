@@ -20,6 +20,12 @@ public class PeerManager {
         }
         public Object parseMessage(Object obj) {
 
+
+            MessageP2P mss = (MessageP2P) obj;
+
+            TextArea chat = chatJoined.get(mss.getRoom());
+            chat.appendText("\n" + mss.getMessage());
+
             /* TODO: Ricevere messaggio ---> convertire in stringa ---> restituire messaggio
              *  formattato al chat manager
              */

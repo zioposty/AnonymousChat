@@ -4,13 +4,19 @@ import java.io.Serializable;
 
 public class MessageP2P implements Serializable {
 
-    private int peerSend;
     private String room;
     private String message;
 
-    public MessageP2P(int peerSend, String room, String message) {
-        this.peerSend = peerSend;
+    public MessageP2P(String room, String message) {
         this.room = room;
         this.message = message;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

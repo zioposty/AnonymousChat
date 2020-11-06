@@ -47,13 +47,13 @@
             <version>3.3.0</version>
         </dependency>
 
-        <!--
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>11.0.1</version>
         </dependency>
-        -->
+
         <dependency>
             <groupId>net.sf.sociaal</groupId>
             <artifactId>freetts</artifactId>

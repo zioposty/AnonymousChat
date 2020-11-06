@@ -22,7 +22,6 @@ public class AppLauncher {
         if(args.length > 0){ id = Integer.parseInt(args[0]); master = args[1]; }
         peer.init(id, master);
         System.out.println(master + " " + id);
-        System.out.println(com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
 
         Application.launch(InitialManager.class, args);
     }

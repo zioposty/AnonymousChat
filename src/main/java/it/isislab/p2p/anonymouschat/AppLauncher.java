@@ -19,7 +19,11 @@ public class AppLauncher {
     public static void main(String[] args) {
 
         PeerManager peer = PeerManager.getInstance();
-        if(args.length > 0){ System.out.println(args); }
+        if(args.length > 0){
+            for (String s: args) {
+                System.out.println(s);
+            }
+        }
         peer.init(id, master);
         System.out.println(master + " " + id);
 

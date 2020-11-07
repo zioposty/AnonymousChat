@@ -7,6 +7,8 @@ public class MessageP2P implements Serializable {
     private String room;
     private String message;
 
+    public MessageP2P(){}
+
     public MessageP2P(String room, String message) {
         this.room = room;
         this.message = message;
@@ -18,5 +20,13 @@ public class MessageP2P implements Serializable {
 
     public String getMessage() {
         return message;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

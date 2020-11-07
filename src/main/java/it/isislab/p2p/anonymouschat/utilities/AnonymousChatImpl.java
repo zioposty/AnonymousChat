@@ -36,6 +36,9 @@ public class AnonymousChatImpl implements AnonymousChat {
         fb.awaitUninterruptibly();
         if(fb.isSuccess()) {
             peer.discover().peerAddress(fb.bootstrapTo().iterator().next()).start().awaitUninterruptibly();
+
+            System.out.println("Peer" + _id + " " + _master_peer);
+
         }else {
             throw new Exception("Error in master peer bootstrap.");
         }
@@ -78,7 +81,9 @@ public class AnonymousChatImpl implements AnonymousChat {
                 if(futureGet.isEmpty() ) return false;
                 HashSet<PeerAddress> peers_on_topic;
                 peers_on_topic = (HashSet<PeerAddress>) futureGet.dataMap().values().iterator().next().object();
+
                 peers_on_topic.add(_dht.peer().peerAddress());
+
                 _dht.put(Number160.createHash(_room_name)).data(new Data(peers_on_topic)).start().awaitUninterruptibly();
                 chat_joined.add(_room_name);
                 System.out.println("Room joined :" + _room_name);
@@ -122,6 +127,7 @@ public class AnonymousChatImpl implements AnonymousChat {
             if (futureGet.isSuccess()) {
                 HashSet<PeerAddress> peers_on_topic;
                 peers_on_topic = (HashSet<PeerAddress>) futureGet.dataMap().values().iterator().next().object();
+
                 for(PeerAddress peer:peers_on_topic)
                 {
                     FutureDirect futureDirect = _dht.peer().sendDirect(peer).object(_text_message).start();

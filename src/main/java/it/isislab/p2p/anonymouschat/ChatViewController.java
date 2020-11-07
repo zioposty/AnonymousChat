@@ -8,7 +8,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 public class ChatViewController {
@@ -21,12 +23,6 @@ public class ChatViewController {
     private final double[] CHAT_SIZE = { 392.0, 418.0 };  //height, width
 
     //----------
-
-    public void publishMessage(TextArea chat, MessageP2P message){
-
-        chat.appendText("\n" + message);
-
-    }
 
 
     public void closeApplication(ActionEvent actionEvent) {
@@ -117,6 +113,7 @@ public class ChatViewController {
                 if(manager.getPeer().createRoom(roomName))
                 //if(true)
                     if(confirmJoinRoom(roomName)){
+                        manager.getPeer().joinRoom(roomName);
                         addTabChat(roomName);
                     }
                     else{
@@ -144,6 +141,7 @@ public class ChatViewController {
     private void addTabChat(String roomName) {
         TextArea chat = new TextArea();
         chat.setId(roomName);
+        chat.setEditable(false);
         manager.addChat(roomName, chat);
         chat.setPrefHeight(CHAT_SIZE[0]);
         chat.setPrefWidth(CHAT_SIZE[1]);
@@ -179,5 +177,21 @@ public class ChatViewController {
         MessageP2P message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
         System.out.println("Sending: " + message.getMessage() + " to " + message.getRoom());
         System.out.println( manager.getPeer().sendMessage(message.getRoom(), message));
+    }
+
+    public void broadcastMessage(ActionEvent actionEvent) {
+
+        MessageP2P message = new MessageP2P();
+        message.setMessage(messageField.getText());
+
+        System.out.println("Broadcasting: " + message.getMessage());
+
+
+        for (Tab t: chatTabs.getTabs()) {
+            message.setRoom(t.getText());
+            manager.getPeer().sendMessage(t.getText(), message);
+        }
+
+
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -26,7 +25,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane fx:id="chatTabs" layoutX="34.0" layoutY="109.0" maxWidth="420.0">
+      <TabPane fx:id="chatTabs" layoutX="35.0" layoutY="86.0" maxWidth="420.0">
          <tabs>
            <!--  Tab model
            <Tab text="chat 1">
@@ -36,19 +35,18 @@
             </Tab> -->
          </tabs>
       </TabPane>
-      <Label layoutX="34.0" layoutY="61.0" prefHeight="40.0" prefWidth="227.0" text="Room Name">
+      <Label fx:id="titleChat" layoutX="34.0" layoutY="38.0" text="Chat">
          <font>
             <Font name="Impact" size="29.0" />
          </font>
       </Label>
-      <TextArea fx:id="messageField" layoutX="467.0" layoutY="109.0" prefHeight="106.0" prefWidth="275.0" />
-      <Label layoutX="467.0" layoutY="74.0" prefHeight="28.0" prefWidth="103.0" text="Message">
+      <TextArea fx:id="messageField" layoutX="467.0" layoutY="86.0" prefHeight="106.0" prefWidth="275.0" />
+      <Label layoutX="467.0" layoutY="51.0" prefHeight="28.0" prefWidth="103.0" text="Message">
          <font>
             <Font name="Impact" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="467.0" layoutY="222.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="57.0" prefWidth="122.0" text="Send" />
-      <ComboBox layoutX="467.0" layoutY="340.0" prefWidth="150.0" />
-      <Button layoutX="617.0" layoutY="222.0" mnemonicParsing="false" onAction="#broadcastMessage" prefHeight="57.0" prefWidth="122.0" text="Broadcast" />
+      <Button layoutX="467.0" layoutY="199.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="57.0" prefWidth="122.0" text="Send" />
+      <Button layoutX="589.0" layoutY="199.0" mnemonicParsing="false" onAction="#broadcastMessage" prefHeight="57.0" prefWidth="150.0" text="Broadcast" />
    </children>
 </AnchorPane>

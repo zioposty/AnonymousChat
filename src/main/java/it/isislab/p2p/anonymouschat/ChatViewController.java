@@ -3,9 +3,12 @@ package it.isislab.p2p.anonymouschat;
 import it.isislab.p2p.anonymouschat.utilities.MessageP2P;
 import it.isislab.p2p.anonymouschat.utilities.PeerManager;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
@@ -18,12 +21,26 @@ public class ChatViewController {
     public MenuItem menuQuit;
     public TabPane chatTabs;
     public TextArea messageField;
+    public Label titleChat;
 
     private PeerManager manager = PeerManager.getInstance();
     private final double[] CHAT_SIZE = { 392.0, 418.0 };  //height, width
 
     //----------
 
+
+    @FXML
+    public void initialize() {
+        chatTabs.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<Tab>() {
+                @Override
+                public void changed(ObservableValue<? extends Tab> ov, Tab oldT, Tab newT) {
+                    newT.setStyle(null);
+                    titleChat.setText(newT.getText());
+                }
+            }
+        );
+    }
 
     public void closeApplication(ActionEvent actionEvent) {
 
@@ -146,8 +163,13 @@ public class ChatViewController {
         chat.setPrefHeight(CHAT_SIZE[0]);
         chat.setPrefWidth(CHAT_SIZE[1]);
         Tab tab = new Tab(roomName, chat);
-
         tab.setOnCloseRequest(e -> removeChat(e));
+
+        chat.textProperty().addListener((observableValue, oldVal, newVal) -> {
+            if (!tab.isSelected())
+                tab.setStyle("-fx-border-color: #CF0000; -fx-font-weight: bold;");
+        });
+
         chatTabs.getTabs().add(tab);
 
 
@@ -173,7 +195,8 @@ public class ChatViewController {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
-        String mss = messageField.getText();
+        String mss = messageField.getText().trim();
+        if(mss.isBlank()) return;
         MessageP2P message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
         System.out.println("Sending: " + message.getMessage() + " to " + message.getRoom());
         System.out.println( manager.getPeer().sendMessage(message.getRoom(), message));
@@ -182,8 +205,10 @@ public class ChatViewController {
     public void broadcastMessage(ActionEvent actionEvent) {
 
         MessageP2P message = new MessageP2P();
-        message.setMessage(messageField.getText());
+        String mss = messageField.getText().trim();
+        if(mss.isBlank()) return;
 
+        message.setMessage(mss);
         System.out.println("Broadcasting: " + message.getMessage());
 
 

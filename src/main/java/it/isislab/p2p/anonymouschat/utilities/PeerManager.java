@@ -1,12 +1,8 @@
 package it.isislab.p2p.anonymouschat.utilities;
 
-import javafx.scene.Parent;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Tab;
-import java.util.Dictionary;
+import javafx.application.Platform;
+import javafx.scene.control.TextArea;;
 import java.util.HashMap;
-
 /*
 *   Singleton per mantenere le informazioni del peer
  */
@@ -14,27 +10,17 @@ public class PeerManager {
 
 
     class MessageListenerImpl implements MessageListener {
-        int peerid;
 
-        public MessageListenerImpl(int peerid)
-        {
-            this.peerid=peerid;
-        }
         public Object parseMessage(Object obj) {
-
 
             MessageP2P mss = (MessageP2P) obj;
 
-            TextArea chat = chatJoined.get(mss.getRoom());
-            chat.appendText("\n" + mss.getMessage());
+            //To edit UI, i'm to be sure to work on FX-main-thread
+            Platform.runLater(() -> {
+                TextArea chat = chatJoined.get(mss.getRoom());
+                chat.appendText("\n" + mss.getMessage());
+            });
 
-            /* TODO: Ricevere messaggio ---> convertire in stringa ---> restituire messaggio
-             *  formattato al chat manager
-             */
-            /*TextIO textIO = TextIoFactory.getTextIO();
-            TextTerminal terminal = textIO.getTextTerminal();
-            terminal.printf("\n"+peerid+"] (Direct Message Received) "+obj+"\n\n");
-            return "success";*/
             return "success";
         }
 
@@ -65,7 +51,7 @@ public class PeerManager {
         id = _id;
         master = _master;
         try {
-            peer = new AnonymousChatImpl(id, master, new MessageListenerImpl(id));
+            peer = new AnonymousChatImpl(id, master, new MessageListenerImpl());
 
         } catch (Exception e) {
             e.printStackTrace();

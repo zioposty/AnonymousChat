@@ -7,14 +7,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
 import java.util.Optional;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ChatViewController {
 
@@ -22,9 +21,14 @@ public class ChatViewController {
     public TabPane chatTabs;
     public TextArea messageField;
     public Label titleChat;
+    public ListView<String> notificationList;
 
-    private PeerManager manager = PeerManager.getInstance();
+    private final PeerManager manager = PeerManager.getInstance();
     private final double[] CHAT_SIZE = { 392.0, 418.0 };  //height, width
+    private final String NOTIF_MSS = "New message in ";
+    private final int NOTIF_MAX_NUMBER = 10;
+
+    private final ReentrantLock notificationLock = new ReentrantLock();
 
     //----------
 
@@ -40,6 +44,7 @@ public class ChatViewController {
                 }
             }
         );
+        
     }
 
     public void closeApplication(ActionEvent actionEvent) {
@@ -166,8 +171,21 @@ public class ChatViewController {
         tab.setOnCloseRequest(e -> removeChat(e));
 
         chat.textProperty().addListener((observableValue, oldVal, newVal) -> {
-            if (!tab.isSelected())
+            if (!tab.isSelected()) {
                 tab.setStyle("-fx-border-color: #CF0000; -fx-font-weight: bold;");
+
+
+                notificationLock.lock();
+                try {
+                    notificationList.getItems().add(NOTIF_MSS + roomName);
+                    if (notificationList.getItems().size() > NOTIF_MAX_NUMBER)
+                        notificationList.getItems().remove(0);
+                }
+                finally {
+                    notificationLock.unlock();
+                }
+            }
+
         });
 
         chatTabs.getTabs().add(tab);
@@ -219,4 +237,22 @@ public class ChatViewController {
 
 
     }
+
+    public void selectNotification(MouseEvent click) {
+        if (click.getClickCount() == 2) {
+            String notification = notificationList.getSelectionModel().getSelectedItem();
+
+            String room = notification.replace(NOTIF_MSS, "");
+
+            while(notificationList.getItems().remove(notification));
+
+            for (Tab t: chatTabs.getTabs()) {
+                if (t.getText().equals(room))  {
+                    chatTabs.getSelectionModel().select(t);
+                    return;
+                }
+            }
+        }
+    }
 }
+

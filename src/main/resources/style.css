@@ -17,6 +17,11 @@
 
 }
 
+.text-field, .text-area
+{
+    -fx-font-size: 15pt;
+}
+
 .button:hover {
     -fx-background-color: black;
     -fx-text-fill: white;

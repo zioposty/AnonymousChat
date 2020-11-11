@@ -48,7 +48,8 @@ public class ChatViewController {
         );
 
         emojiSelector.getItems().addAll(EmojiManager.getAll());
-        emojiSelector.getSelectionModel().select(0);
+        emojiSelector.getSelectionModel().selectFirst();
+        messageField.setWrapText(true);
 
     }
 
@@ -172,6 +173,7 @@ public class ChatViewController {
         manager.addChat(roomName, chat);
         chat.setPrefHeight(CHAT_SIZE[0]);
         chat.setPrefWidth(CHAT_SIZE[1]);
+        chat.setWrapText(true);
         Tab tab = new Tab(roomName, chat);
         tab.setOnCloseRequest(e -> removeChat(e));
 
@@ -261,6 +263,11 @@ public class ChatViewController {
                 }
             }
         }
+    }
+
+    public void addEmoji(ActionEvent actionEvent) {
+
+        messageField.appendText(emojiSelector.getSelectionModel().getSelectedItem());
     }
 }
 

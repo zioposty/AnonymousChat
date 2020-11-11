@@ -26,7 +26,7 @@
           <Font name="Impact" size="29.0" />
         </font>
     </Label>
-    <TextArea fx:id="messageField" layoutX="467.0" layoutY="198.0" prefHeight="57.0" prefWidth="275.0" />
+    <TextArea fx:id="messageField" layoutX="467.0" layoutY="198.0" prefHeight="57.0" prefWidth="275.0"  />
     <Label layoutX="467.0" layoutY="163.0" prefHeight="28.0" prefWidth="103.0" text="Message">
         <font>
           <Font name="Impact" size="23.0" />
@@ -40,10 +40,11 @@
           <Font name="Impact" size="23.0" />
         </font>
     </Label>
-   <ComboBox fx:id="emojiSelector" layoutX="758.0" layoutY="198.0" prefWidth="150.0" editable="false" />
+   <ComboBox fx:id="emojiSelector" editable="false" layoutX="758.0" layoutY="198.0" prefWidth="150.0" />
    <Label layoutX="758.0" layoutY="163.0" prefHeight="28.0" prefWidth="103.0" text="Emoji">
       <font>
          <Font name="Impact" size="23.0" />
       </font>
    </Label>
+   <Button layoutX="758.0" layoutY="261.0" mnemonicParsing="false" onAction="#addEmoji" prefHeight="57.0" prefWidth="122.0" text="Add emoji" />
 </AnchorPane>

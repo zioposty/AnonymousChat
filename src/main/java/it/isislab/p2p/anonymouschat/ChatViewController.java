@@ -1,5 +1,6 @@
 package it.isislab.p2p.anonymouschat;
 
+import it.isislab.p2p.anonymouschat.utilities.EmojiManager;
 import it.isislab.p2p.anonymouschat.utilities.MessageP2P;
 import it.isislab.p2p.anonymouschat.utilities.PeerManager;
 
@@ -29,6 +30,7 @@ public class ChatViewController {
     private final int NOTIF_MAX_NUMBER = 10;
 
     private final ReentrantLock notificationLock = new ReentrantLock();
+    public ComboBox<String> emojiSelector;
 
     //----------
 
@@ -44,7 +46,10 @@ public class ChatViewController {
                 }
             }
         );
-        
+
+        emojiSelector.getItems().addAll(EmojiManager.getAll());
+        emojiSelector.getSelectionModel().select(0);
+
     }
 
     public void closeApplication(ActionEvent actionEvent) {
@@ -215,6 +220,7 @@ public class ChatViewController {
     public void sendMessage(ActionEvent actionEvent) {
         String mss = messageField.getText().trim();
         if(mss.isBlank()) return;
+        messageField.setText("");
         MessageP2P message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
         System.out.println("Sending: " + message.getMessage() + " to " + message.getRoom());
         System.out.println( manager.getPeer().sendMessage(message.getRoom(), message));
@@ -225,6 +231,8 @@ public class ChatViewController {
         MessageP2P message = new MessageP2P();
         String mss = messageField.getText().trim();
         if(mss.isBlank()) return;
+
+        messageField.setText("");
 
         message.setMessage(mss);
         System.out.println("Broadcasting: " + message.getMessage());

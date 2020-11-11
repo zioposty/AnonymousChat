@@ -19,10 +19,10 @@ public class InitialManager extends Application {
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
         primaryStage.setTitle("Anonymous Chat - Luca Postiglione");
-        primaryStage.setMaxHeight(600.0);
-        primaryStage.setMaxWidth(800.0);
-        primaryStage.setMinHeight(600.0);
-        primaryStage.setMinWidth(800.0);
+        primaryStage.setMaxHeight(768.0);
+        primaryStage.setMaxWidth(1024.0);
+        primaryStage.setMinHeight(768.0);
+        primaryStage.setMinWidth(1024.0);
         Scene scene = new Scene(root);
         SceneManager screenController = SceneManager.getInstance();
         screenController.addScene("mainmenu", FXMLLoader.load(getClass().getResource( "/MainMenu.fxml" )));

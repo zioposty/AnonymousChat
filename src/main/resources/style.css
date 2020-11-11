@@ -7,9 +7,9 @@
 }
 
 
-.button{
+.button, .combo-box{
     -fx-alignment: center;
-    -fx-font-size: 20pt;
+    -fx-font-size: 15pt;
 
     -fx-background-color: #FFFFFF;
     -fx-border: 4px 4px 4px 4px;
@@ -24,4 +24,20 @@
 
 .label, .button {
     -fx-font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+}
+
+
+/* thanks to https://github.com/MorbZ/OpenSansEmoji */
+@font-face {
+    font-family: 'OpenSansEmoji';
+    src: url('OpenSansEmoji.ttf');
+}
+
+.text-field {
+    -fx-font-family: OpenSansEmoji;
+    -fx-font-size: 32;
+}
+
+.combo-box {
+    -fx-font-size: 25;
 }

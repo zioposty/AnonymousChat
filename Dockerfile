@@ -19,4 +19,4 @@ RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mes
 RUN apt-get remove nvidia*
 CMD java -jar ac-1.0-jar-with-dependencies.jar ${ID} ${MASTERIP}
 
-# -e DISPLAY=192.168.47.33:0.0      da aggiungere al run
+# -e DISPLAY=192.168.74.145:0.0      da aggiungere al run

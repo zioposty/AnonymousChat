@@ -1,7 +1,15 @@
 package it.isislab.p2p.anonymouschat.utilities;
 
 import javafx.application.Platform;
-import javafx.scene.control.TextArea;;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextArea;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,9 +27,23 @@ public class PeerManager {
 
             //To edit UI, i'm to be sure to work on FX-main-thread
             Platform.runLater(() -> {
-                TextArea chat = chatJoined.get(mss.getRoom());
+                TextFlow chat = chatJoined.get(mss.getRoom());
                 Date date = new Date();
-                chat.appendText(mss.getMessageFormatted(date));
+                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM, HH:mm");
+                Text message = new Text(mss.getMessage() + "\n");
+                message.setFont(Font.font(20.0));
+                Label hour = new Label(formatter.format(date));
+                hour.setAlignment(Pos.CENTER_RIGHT);
+                hour.setFont(Font.font(15.0));
+                hour.setPrefWidth(chat.getWidth() - 5.0);
+                // Separator
+                final Separator separator = new Separator(Orientation.HORIZONTAL);
+                separator.prefWidthProperty().bind(chat.widthProperty());
+                separator.setStyle("-fx-background-color: #484848;");
+                chat.getChildren().addAll(message, hour, separator);
+
+
+
             });
 
             return "success";
@@ -46,7 +68,7 @@ public class PeerManager {
 
     private PeerManager() { }
 
-    final private HashMap<String, TextArea> chatJoined = new HashMap<>();
+    final private HashMap<String, TextFlow> chatJoined = new HashMap<>();
 
     public boolean init(int _id, String _master)
     {
@@ -69,7 +91,7 @@ public class PeerManager {
     public AnonymousChatImpl getPeer(){ return peer;}
 
     public HashMap getChat() { return chatJoined; }
-    public void addChat(String roomName, TextArea chat) { chatJoined.put(roomName, chat); }
+    public void addChat(String roomName, TextFlow chat) { chatJoined.put(roomName, chat); }
     public boolean isChatJoined(String chatName){   return chatJoined.containsKey((chatName)); }
     public void removeChat(String roomName){ chatJoined.remove(roomName); }
 }

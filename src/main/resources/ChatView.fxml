@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="760.0" prefWidth="1020.0" style=" -fx-background-image: none" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.ChatViewController">
+<AnchorPane  style=" -fx-background-image: none" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.ChatViewController">
     <MenuBar layoutY="-1.0" prefHeight="28.0" prefWidth="1020.0">
         <Menu mnemonicParsing="false" text="Room">
             <MenuItem fx:id="menuCreateRoom" mnemonicParsing="false" onAction="#createRoom" text="Create Room" />

@@ -7,13 +7,17 @@ import it.isislab.p2p.anonymouschat.utilities.PeerManager;
 import it.isislab.p2p.anonymouschat.utilities.SceneManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 
 
@@ -178,6 +182,7 @@ public class ChatViewController {
     }
 
     private void addTabChat(String roomName) {
+        /*
         TextArea chat = new TextArea();
         chat.setId(roomName);
         chat.setEditable(false);
@@ -186,9 +191,20 @@ public class ChatViewController {
         chat.setPrefWidth(CHAT_SIZE[1]);
         chat.setWrapText(true);
         Tab tab = new Tab(roomName, chat);
+        */
+
+        TextFlow chat = new TextFlow();
+        chat.setPrefHeight(CHAT_SIZE[0]);
+        chat.setPrefWidth(CHAT_SIZE[1]);
+        chat.setPadding(new Insets(5));
+        peerManager.addChat(roomName, chat);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(chat);
+        Tab tab = new Tab(roomName, scrollPane);
+
         tab.setOnCloseRequest(e -> removeChat(e));
 
-        chat.textProperty().addListener((observableValue, oldVal, newVal) -> {
+        chat.getChildren().addListener((ListChangeListener<? super Node>) (list) -> {
             if (!tab.isSelected()) {
                 tab.setStyle("-fx-border-color: #CF0000; -fx-font-weight: bold;");
 

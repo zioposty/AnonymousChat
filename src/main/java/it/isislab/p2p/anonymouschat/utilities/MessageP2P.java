@@ -38,10 +38,7 @@ public class MessageP2P implements Serializable {
         return message;
     }
 
-    public String getMessageFormatted(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-M HH:mm");
-        return message + "\n\t\t\t\t\t\t" + formatter.format(date) + "\n----------------\n";
-    }
+
 
     public void setRoom(String room) {
         this.room = room;

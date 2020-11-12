@@ -4,15 +4,22 @@ import it.isislab.p2p.anonymouschat.utilities.EmojiManager;
 import it.isislab.p2p.anonymouschat.utilities.MessageP2P;
 import it.isislab.p2p.anonymouschat.utilities.PeerManager;
 
+import it.isislab.p2p.anonymouschat.utilities.SceneManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Optional;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -24,13 +31,17 @@ public class ChatViewController {
     public Label titleChat;
     public ListView<String> notificationList;
 
-    private final PeerManager manager = PeerManager.getInstance();
-    private final double[] CHAT_SIZE = { 392.0, 418.0 };  //height, width
+    private final PeerManager peerManager = PeerManager.getInstance();
+    private final SceneManager sceneManager = SceneManager.getInstance();
+    private final double[] CHAT_SIZE = { 620.0, 418.0 };  //height, width
     private final String NOTIF_MSS = "New message in ";
     private final int NOTIF_MAX_NUMBER = 10;
 
     private final ReentrantLock notificationLock = new ReentrantLock();
     public ComboBox<String> emojiSelector;
+    public ImageView previewImage;
+
+    private String imagePath = "";
 
     //----------
 
@@ -55,17 +66,17 @@ public class ChatViewController {
 
     public void closeApplication(ActionEvent actionEvent) {
 
-        manager.getPeer().leaveNetwork();
+        peerManager.getPeer().leaveNetwork();
         System.exit(0);
     }
 
     private void removeChat(Event e){
         Tab tab1 = (Tab) e.getSource();
         TextArea t = (TextArea) tab1.getContent().lookup("TextArea");
-        manager.removeChat(t.getId());
-        manager.getPeer().leaveRoom(t.getId());
+        peerManager.removeChat(t.getId());
+        peerManager.getPeer().leaveRoom(t.getId());
         //System.out.println("Leaving " + t.getId());
-        System.out.println(manager.getChat().toString());
+        System.out.println(peerManager.getChat().toString());
     }
 
     public void joinRoom(ActionEvent actionEvent) {
@@ -77,7 +88,7 @@ public class ChatViewController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String roomName = result.get();
-            if(manager.isChatJoined(roomName)){
+            if(peerManager.isChatJoined(roomName)){
 
                 for(Tab t: chatTabs.getTabs())
                 {
@@ -97,7 +108,7 @@ public class ChatViewController {
                 return;
             }
 
-            if(manager.getPeer().joinRoom(roomName))
+            if(peerManager.getPeer().joinRoom(roomName))
             //if (true)
                 addTabChat(roomName);
             else {
@@ -138,10 +149,10 @@ public class ChatViewController {
         Optional<String> result =  dialog.showAndWait();
         if(result.isPresent()) {
             String roomName = result.get();
-                if(manager.getPeer().createRoom(roomName))
+                if(peerManager.getPeer().createRoom(roomName))
                 //if(true)
                     if(confirmJoinRoom(roomName)){
-                        manager.getPeer().joinRoom(roomName);
+                        peerManager.getPeer().joinRoom(roomName);
                         addTabChat(roomName);
                     }
                     else{
@@ -170,7 +181,7 @@ public class ChatViewController {
         TextArea chat = new TextArea();
         chat.setId(roomName);
         chat.setEditable(false);
-        manager.addChat(roomName, chat);
+        peerManager.addChat(roomName, chat);
         chat.setPrefHeight(CHAT_SIZE[0]);
         chat.setPrefWidth(CHAT_SIZE[1]);
         chat.setWrapText(true);
@@ -184,8 +195,7 @@ public class ChatViewController {
 
                 notificationLock.lock();
                 try {
-                    notificationList.getItems().add(NOTIF_MSS + roomName);
-                    if (notificationList.getItems().size() > NOTIF_MAX_NUMBER)
+                    notificationList.getItems().add(NOTIF_MSS + roomName);                    if (notificationList.getItems().size() > NOTIF_MAX_NUMBER)
                         notificationList.getItems().remove(0);
                 }
                 finally {
@@ -221,28 +231,39 @@ public class ChatViewController {
 
     public void sendMessage(ActionEvent actionEvent) {
         String mss = messageField.getText().trim();
-        if(mss.isBlank()) return;
+        if(mss.isBlank() || peerManager.getChat().size() == 0) return;
         messageField.setText("");
-        MessageP2P message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
+        MessageP2P message;
+        if (imagePath.isBlank()) message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
+        else
+            message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss, imagePath);
+
+        imagePath = "";
+
+
         System.out.println("Sending: " + message.getMessage() + " to " + message.getRoom());
-        System.out.println( manager.getPeer().sendMessage(message.getRoom(), message));
+        System.out.println( peerManager.getPeer().sendMessage(message.getRoom(), message));
     }
 
     public void broadcastMessage(ActionEvent actionEvent) {
 
         MessageP2P message = new MessageP2P();
         String mss = messageField.getText().trim();
-        if(mss.isBlank()) return;
+        if(mss.isBlank() || peerManager.getChat().size() == 0) return;
 
         messageField.setText("");
 
         message.setMessage(mss);
-        System.out.println("Broadcasting: " + message.getMessage());
+        if(!imagePath.isBlank()) {
+            message.setImage(imagePath);
+            imagePath = "";
+        }
+            System.out.println("Broadcasting: " + message.getMessage());
 
 
         for (Tab t: chatTabs.getTabs()) {
             message.setRoom(t.getText());
-            manager.getPeer().sendMessage(t.getText(), message);
+            peerManager.getPeer().sendMessage(t.getText(), message);
         }
 
 
@@ -268,6 +289,25 @@ public class ChatViewController {
     public void addEmoji(ActionEvent actionEvent) {
 
         messageField.appendText(emojiSelector.getSelectionModel().getSelectedItem());
+    }
+
+    public void selectImage(ActionEvent actionEvent) throws FileNotFoundException {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Add image to a message");
+        chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        chooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("All Images", "*.*"),
+            new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+            new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+
+        File file = chooser.showOpenDialog(sceneManager.getOpenedStage());
+        if (file != null) {
+            imagePath = file.getAbsolutePath();
+            previewImage.setImage(new Image(new FileInputStream(imagePath)));
+        }
+
     }
 }
 

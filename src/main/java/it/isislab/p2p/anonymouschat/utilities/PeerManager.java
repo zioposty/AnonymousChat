@@ -2,6 +2,8 @@ package it.isislab.p2p.anonymouschat.utilities;
 
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 /*
 *   Singleton per mantenere le informazioni del peer
@@ -18,7 +20,8 @@ public class PeerManager {
             //To edit UI, i'm to be sure to work on FX-main-thread
             Platform.runLater(() -> {
                 TextArea chat = chatJoined.get(mss.getRoom());
-                chat.appendText("\n" + mss.getMessage());
+                Date date = new Date();
+                chat.appendText(mss.getMessageFormatted(date));
             });
 
             return "success";

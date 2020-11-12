@@ -15,6 +15,7 @@ public class SceneManager {
     private HashMap<String, Pane> screenMap;
 
     private static SceneManager instance = null;
+    private  Stage openedStage;
 
     public static SceneManager getInstance()
     {
@@ -46,6 +47,10 @@ public class SceneManager {
         stage.setMinWidth(1024.0);
         stage.setScene(scene);
         stage.show();
+        openedStage  = stage;
+    }
 
+    public Stage getOpenedStage() {
+        return openedStage;
     }
 }

@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -27,20 +28,33 @@ public class PeerManager {
 
             //To edit UI, i'm to be sure to work on FX-main-thread
             Platform.runLater(() -> {
+
                 TextFlow chat = chatJoined.get(mss.getRoom());
                 Date date = new Date();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM, HH:mm");
-                Text message = new Text(mss.getMessage() + "\n");
+                Text message = new Text("Sending Image\n");
                 message.setFont(Font.font(20.0));
+
+                if(!mss.getMessage().isBlank())
+                    message.setText(mss.getMessage() + "\n");
+
+
+                ImageView image = new ImageView();
+                if(!(mss.getImage() == null))
+                {
+                    image.setImage(mss.getImage().getImage());
+                    image.setFitHeight(100);
+                    image.setPreserveRatio(true);
+                }
                 Label hour = new Label(formatter.format(date));
-                hour.setAlignment(Pos.CENTER_RIGHT);
-                hour.setFont(Font.font(15.0));
                 hour.setPrefWidth(chat.getWidth() - 30.0);
+                hour.setAlignment(Pos.CENTER_RIGHT);
+
                 // Separator
                 final Separator separator = new Separator(Orientation.HORIZONTAL);
                 separator.prefWidthProperty().bind(chat.widthProperty());
                 separator.setStyle("-fx-background-color: #484848;");
-                chat.getChildren().addAll(message, hour, separator);
+                chat.getChildren().addAll(message, image, hour, separator);
 
 
 

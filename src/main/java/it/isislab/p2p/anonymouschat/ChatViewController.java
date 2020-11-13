@@ -251,18 +251,15 @@ public class ChatViewController {
 
     }
 
-    public void sendMessage(ActionEvent actionEvent) {
+    public void sendMessage(ActionEvent actionEvent) throws FileNotFoundException {
         String mss = messageField.getText().trim();
-        if(mss.isBlank() || peerManager.getChat().size() == 0) return;
+        if((mss.isBlank() && imagePath.isBlank()) || peerManager.getChat().size() == 0) return;
         messageField.setText("");
         MessageP2P message;
         if (imagePath.isBlank()) message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
         else
             message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss, imagePath);
-
-        imagePath = "";
-
-
+        cancelImgButton.fire();
         System.out.println("Sending: " + message.getMessage() + " to " + message.getRoom());
         System.out.println( peerManager.getPeer().sendMessage(message.getRoom(), message));
     }
@@ -271,14 +268,18 @@ public class ChatViewController {
 
         MessageP2P message = new MessageP2P();
         String mss = messageField.getText().trim();
-        if(mss.isBlank() || peerManager.getChat().size() == 0) return;
+        if((mss.isBlank() && imagePath.isBlank()) || peerManager.getChat().size() == 0) return;
 
         messageField.setText("");
 
         message.setMessage(mss);
         if(!imagePath.isBlank()) {
-            message.setImage(imagePath);
-            imagePath = "";
+            try {
+                message.setImage(imagePath);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            cancelImgButton.fire();
         }
             System.out.println("Broadcasting: " + message.getMessage());
 

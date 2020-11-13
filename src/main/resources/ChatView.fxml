@@ -50,5 +50,5 @@
    </Label>
    <Button layoutX="758.0" layoutY="150.0" mnemonicParsing="false" onAction="#addEmoji" prefHeight="57.0" prefWidth="122.0" text="Add emoji" />
    <Button layoutX="544.0" layoutY="241.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="57.0" prefWidth="122.0" text="Add image" />
-   <Button fx:id="cancelImgButton" layoutX="640.0" layoutY="395.0" mnemonicParsing="false" onAction="#removeImage" prefHeight="25.0" prefWidth="25.0" style="-fx-background-image: url(Images/cancel.png); -fx-background-size: contain" visible="false" />
+   <Button fx:id="cancelImgButton" layoutX="640.0" layoutY="395.0" mnemonicParsing="false" onAction="#removeImage" prefHeight="37.0" prefWidth="38.0" style="-fx-background-image: url(Images/cancel.png); -fx-background-size: contain; -fx-border-width: 0 0 0 0; -fx-font-size: 10" visible="false"  />
 </AnchorPane>

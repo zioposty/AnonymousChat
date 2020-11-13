@@ -25,7 +25,12 @@ public class AppLauncher {
         if(args.length > 0){ id = Integer.parseInt(args[0]); master = args[1]; }
         else System.exit(-1);
 
-        peer.init(id, master);
+        try {
+            peer.init(id, master);
+        } catch (Exception e) {
+            System.out.println("Error with connection. App will be closed");
+            System.exit(-1);
+        }
         System.out.println(master + " " + id);
 
         Application.launch(InitialManager.class, args);

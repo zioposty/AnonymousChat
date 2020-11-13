@@ -37,13 +37,14 @@ public class ChatViewController {
 
     private final PeerManager peerManager = PeerManager.getInstance();
     private final SceneManager sceneManager = SceneManager.getInstance();
-    private final double[] CHAT_SIZE = { 620.0, 418.0 };  //height, width
+    private final double[] CHAT_SIZE = { 620.0, 420.0 };  //height, width
     private final String NOTIF_MSS = "New message in ";
     private final int NOTIF_MAX_NUMBER = 10;
 
     private final ReentrantLock notificationLock = new ReentrantLock();
     public ComboBox<String> emojiSelector;
     public ImageView previewImage;
+    public Button cancelImgButton;
 
     private String imagePath = "";
 
@@ -56,6 +57,8 @@ public class ChatViewController {
             new ChangeListener<Tab>() {
                 @Override
                 public void changed(ObservableValue<? extends Tab> ov, Tab oldT, Tab newT) {
+                    if (newT == null) return;
+
                     newT.setStyle(null);
                     titleChat.setText(newT.getText());
                 }
@@ -76,7 +79,7 @@ public class ChatViewController {
 
     private void removeChat(Event e){
         Tab tab1 = (Tab) e.getSource();
-        TextArea t = (TextArea) tab1.getContent().lookup("TextArea");
+        TextFlow t = (TextFlow) tab1.getContent().lookup("TextFlow");
         peerManager.removeChat(t.getId());
         peerManager.getPeer().leaveRoom(t.getId());
         //System.out.println("Leaving " + t.getId());
@@ -194,11 +197,14 @@ public class ChatViewController {
         */
 
         TextFlow chat = new TextFlow();
+        chat.setId(roomName);
         chat.setPrefHeight(CHAT_SIZE[0]);
         chat.setPrefWidth(CHAT_SIZE[1]);
-        chat.setPadding(new Insets(5));
+
+        chat.setPadding(new Insets(0,20 , 0, 5));
         peerManager.addChat(roomName, chat);
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setContent(chat);
         Tab tab = new Tab(roomName, scrollPane);
 
@@ -322,8 +328,15 @@ public class ChatViewController {
         if (file != null) {
             imagePath = file.getAbsolutePath();
             previewImage.setImage(new Image(new FileInputStream(imagePath)));
+            cancelImgButton.setVisible(true);
         }
 
+    }
+
+    public void removeImage(ActionEvent actionEvent) {
+        imagePath = "";
+        previewImage.setImage(null);
+        cancelImgButton.setVisible(false);
     }
 }
 

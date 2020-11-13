@@ -23,7 +23,7 @@ public class AnonymousChatImpl implements AnonymousChat {
     final private PeerDHT _dht;
     final private int DEFAULT_MASTER_PORT=4000;
 
-    final private ArrayList<String> chat_joined =new ArrayList<String>();
+    final private ArrayList<String> chat_joined =new ArrayList<>();
 
     public AnonymousChatImpl( int _id, String _master_peer, final MessageListener _listener) throws Exception
     {

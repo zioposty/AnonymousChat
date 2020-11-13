@@ -35,7 +35,7 @@ public class PeerManager {
                 Label hour = new Label(formatter.format(date));
                 hour.setAlignment(Pos.CENTER_RIGHT);
                 hour.setFont(Font.font(15.0));
-                hour.setPrefWidth(chat.getWidth() - 5.0);
+                hour.setPrefWidth(chat.getWidth() - 30.0);
                 // Separator
                 final Separator separator = new Separator(Orientation.HORIZONTAL);
                 separator.prefWidthProperty().bind(chat.widthProperty());
@@ -70,17 +70,14 @@ public class PeerManager {
 
     final private HashMap<String, TextFlow> chatJoined = new HashMap<>();
 
-    public boolean init(int _id, String _master)
-    {
+    public boolean init(int _id, String _master) throws Exception {
         if( id != -1  && master != null && peer != null) return false;
         id = _id;
         master = _master;
-        try {
-            peer = new AnonymousChatImpl(id, master, new MessageListenerImpl());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        peer = new AnonymousChatImpl(id, master, new MessageListenerImpl());
+
+
         return true;
     }
 

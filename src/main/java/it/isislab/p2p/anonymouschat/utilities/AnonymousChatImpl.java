@@ -72,8 +72,6 @@ public class AnonymousChatImpl implements AnonymousChat {
     @SuppressWarnings("unchecked")
     public boolean joinRoom(String _room_name) {
 
-        if(chat_joined.contains(_room_name)) return false;
-
         try {
             FutureGet futureGet = _dht.get(Number160.createHash(_room_name)).start();
             futureGet.awaitUninterruptibly();

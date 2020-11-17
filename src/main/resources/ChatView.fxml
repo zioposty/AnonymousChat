@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="760.0" prefWidth="1020.0" style=" -fx-background-image: none" styleClass="main-background" stylesheets="style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.isislab.p2p.anonymouschat.ChatViewController">
-   <ImageView fx:id="previewImage" fitHeight="115.0" fitWidth="122.0" layoutX="544.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true" />
+   <ImageView fx:id="previewImage" fitHeight="115.0" fitWidth="122.0" layoutX="523.0" layoutY="524.0" pickOnBounds="true" preserveRatio="true" />
     <MenuBar layoutY="-1.0" prefHeight="28.0" prefWidth="1020.0">
         <Menu mnemonicParsing="false" text="Room">
             <MenuItem fx:id="menuCreateRoom" mnemonicParsing="false" onAction="#createRoom" text="Create Room" />
@@ -15,7 +15,7 @@
             <MenuItem fx:id="menuQuit" mnemonicParsing="false" onAction="#closeApplication" text="Quit AnonymousChat" />
         </Menu>
     </MenuBar>
-    <TabPane fx:id="chatTabs" layoutX="35.0" layoutY="86.0" maxWidth="420.0">
+    <TabPane fx:id="chatTabs" layoutX="35.0" layoutY="86.0" maxWidth="500.0">
         <!--  Tab model
            <Tab text="chat 1">
                <content>
@@ -28,27 +28,37 @@
           <Font name="Impact" size="29.0" />
         </font>
     </Label>
-    <TextArea fx:id="messageField" layoutX="467.0" layoutY="81.0" prefHeight="66.0" prefWidth="275.0" />
-    <Label layoutX="467.0" layoutY="46.0" prefHeight="28.0" prefWidth="103.0" text="Message">
+    <TextArea fx:id="messageField" layoutX="474.0" layoutY="306.0" prefHeight="66.0" prefWidth="275.0" />
+    <Label layoutX="474.0" layoutY="271.0" prefHeight="28.0" prefWidth="103.0" text="Message">
         <font>
           <Font name="Impact" size="23.0" />
         </font>
     </Label>
-    <Button layoutX="467.0" layoutY="150.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="57.0" prefWidth="122.0" text="Send" />
-    <Button layoutX="592.0" layoutY="150.0" mnemonicParsing="false" onAction="#broadcastMessage" prefHeight="57.0" prefWidth="156.0" text="Broadcast" />
-    <ListView fx:id="notificationList" layoutX="467.0" layoutY="488.0" onMouseClicked="#selectNotification" prefHeight="200.0" prefWidth="275.0" />
-    <Label layoutX="469.0" layoutY="454.0" prefHeight="28.0" prefWidth="140.0" text="Notifications">
+    <Button layoutX="474.0" layoutY="375.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="57.0" prefWidth="122.0" text="Send" />
+    <Button layoutX="599.0" layoutY="375.0" mnemonicParsing="false" onAction="#broadcastMessage" prefHeight="57.0" prefWidth="156.0" text="Broadcast" />
+    <ListView fx:id="notificationList" layoutX="709.0" layoutY="488.0" onMouseClicked="#selectNotification" prefHeight="200.0" prefWidth="275.0" />
+    <Label layoutX="711.0" layoutY="454.0" prefHeight="28.0" prefWidth="140.0" text="Notifications">
         <font>
           <Font name="Impact" size="23.0" />
         </font>
     </Label>
-   <ComboBox fx:id="emojiSelector" editable="false" layoutX="758.0" layoutY="81.0" prefWidth="150.0" />
-   <Label layoutX="758.0" layoutY="46.0" prefHeight="28.0" prefWidth="103.0" text="Emoji">
+   <ComboBox fx:id="emojiSelector" editable="false" layoutX="765.0" layoutY="306.0" prefWidth="150.0" />
+   <Label layoutX="765.0" layoutY="271.0" prefHeight="28.0" prefWidth="103.0" text="Emoji">
       <font>
          <Font name="Impact" size="23.0" />
       </font>
    </Label>
-   <Button layoutX="758.0" layoutY="150.0" mnemonicParsing="false" onAction="#addEmoji" prefHeight="57.0" prefWidth="122.0" text="Add emoji" />
-   <Button layoutX="544.0" layoutY="241.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="57.0" prefWidth="122.0" text="Add image" />
-   <Button fx:id="cancelImgButton" layoutX="640.0" layoutY="395.0" mnemonicParsing="false" onAction="#removeImage" prefHeight="37.0" prefWidth="38.0" style="-fx-background-image: url(Images/cancel.png); -fx-background-size: contain; -fx-border-width: 0 0 0 0; -fx-font-size: 10" visible="false"  />
+   <Button layoutX="765.0" layoutY="375.0" mnemonicParsing="false" onAction="#addEmoji" prefHeight="57.0" prefWidth="122.0" text="Add emoji" />
+   <Button layoutX="523.0" layoutY="460.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="57.0" prefWidth="122.0" text="Add image" />
+   <Button fx:id="cancelImgButton" layoutX="619.0" layoutY="614.0" mnemonicParsing="false" onAction="#removeImage" prefHeight="37.0" prefWidth="38.0" style="-fx-background-image: url(Images/cancel.png); -fx-background-size: contain; -fx-border-width: 0 0 0 0; -fx-font-size: 10" visible="false" />
+   <Label layoutX="472.0" layoutY="47.0" prefHeight="28.0" prefWidth="226.0" text="Room manager">
+      <font>
+         <Font name="Impact" size="23.0" />
+      </font>
+   </Label>
+   <TextArea fx:id="roomField" layoutX="472.0" layoutY="86.0" prefHeight="66.0" prefWidth="275.0" />
+   <Button layoutX="486.0" layoutY="156.0" mnemonicParsing="false" onAction="#createRoomButton" prefHeight="57.0" prefWidth="122.0" text="Create" />
+   <Button layoutX="611.0" layoutY="156.0" mnemonicParsing="false" onAction="#joinRoomButton" prefHeight="57.0" prefWidth="122.0" text="Join" />
+   <Button layoutX="765.0" layoutY="104.0" mnemonicParsing="false" onAction="#closeApplication" prefHeight="83.0" prefWidth="150.0" text="Leave&#10;Network" />
+   <Label fx:id="opInfo" layoutX="472.0" layoutY="230.0" prefHeight="28.0" prefWidth="275.0" />
 </AnchorPane>

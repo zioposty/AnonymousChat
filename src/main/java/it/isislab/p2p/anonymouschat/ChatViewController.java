@@ -37,7 +37,7 @@ public class ChatViewController {
 
     private final PeerManager peerManager = PeerManager.getInstance();
     private final SceneManager sceneManager = SceneManager.getInstance();
-    private final double[] CHAT_SIZE = { 620.0, 420.0 };  //height, width
+    private final double[] CHAT_SIZE = { 620.0, 430.0 };  //height, width
     private final String NOTIF_MSS = "New message in ";
     private final int NOTIF_MAX_NUMBER = 10;
 
@@ -45,6 +45,8 @@ public class ChatViewController {
     public ComboBox<String> emojiSelector;
     public ImageView previewImage;
     public Button cancelImgButton;
+    public TextArea roomField;
+    public Label opInfo;
 
     private String imagePath = "";
 
@@ -317,7 +319,7 @@ public class ChatViewController {
     public void selectImage(ActionEvent actionEvent) throws FileNotFoundException {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Add image to a message");
-        chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
 
         chooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("All Images", "*.*"),
@@ -338,6 +340,36 @@ public class ChatViewController {
         imagePath = "";
         previewImage.setImage(null);
         cancelImgButton.setVisible(false);
+    }
+
+    public void createRoomButton(ActionEvent actionEvent) {
+        String roomName = roomField.getText();
+        if(peerManager.getPeer().createRoom(roomName))
+            opInfo.setText(roomName +  " created");
+        else
+            opInfo.setText(roomName + " already exists");
+    }
+
+    public void joinRoomButton(ActionEvent actionEvent) {
+        String roomName = roomField.getText();
+
+        if(peerManager.isChatJoined(roomName)){
+            for(Tab t: chatTabs.getTabs())
+            {
+                if(t.getText().equals(roomName)) {
+                    chatTabs.getSelectionModel().select(t);
+                    break;
+                }
+
+            }
+
+            opInfo.setText("You have already joined " + roomName);
+        }
+        else
+            if(peerManager.getPeer().joinRoom(roomName))    addTabChat(roomName);
+            else opInfo.setText(roomName + "doesn't exist");
+
+
     }
 }
 

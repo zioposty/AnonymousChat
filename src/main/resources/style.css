@@ -30,7 +30,9 @@
 .label, .button {
     -fx-font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
 }
-
+#opInfo{
+    -fx-font-size: 15;
+}
 
 /* thanks to https://github.com/MorbZ/OpenSansEmoji */
 @font-face {

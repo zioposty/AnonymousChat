@@ -41,9 +41,9 @@ public class SceneManager {
     public void activate(String name, Stage stage){
         Pane p = screenMap.get(name);
         Scene scene = new Scene(p);
-        stage.setMaxHeight(768.0);
+        stage.setMaxHeight(780.0);
         stage.setMaxWidth(1024.0);
-        stage.setMinHeight(768.0);
+        stage.setMinHeight(780.0);
         stage.setMinWidth(1024.0);
         stage.setScene(scene);
         stage.show();

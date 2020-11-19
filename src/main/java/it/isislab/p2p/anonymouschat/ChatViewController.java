@@ -322,7 +322,7 @@ public class ChatViewController {
 
 
         chooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("All Images", "*.*"),
+            new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"),
             new FileChooser.ExtensionFilter("JPG", "*.jpg"),
             new FileChooser.ExtensionFilter("PNG", "*.png")
         );
@@ -344,6 +344,10 @@ public class ChatViewController {
 
     public void createRoomButton(ActionEvent actionEvent) {
         String roomName = roomField.getText();
+        if(roomName.isBlank()) {
+            opInfo.setText("Insert roomname");
+            return;
+        }
         if(peerManager.getPeer().createRoom(roomName))
             opInfo.setText(roomName +  " created");
         else
@@ -352,6 +356,11 @@ public class ChatViewController {
 
     public void joinRoomButton(ActionEvent actionEvent) {
         String roomName = roomField.getText();
+
+        if(roomName.isBlank()) {
+            opInfo.setText("Insert roomname");
+            return;
+        }
 
         if(peerManager.isChatJoined(roomName)){
             for(Tab t: chatTabs.getTabs())

@@ -323,8 +323,8 @@ public class ChatViewController {
 
         chooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"),
-            new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-            new FileChooser.ExtensionFilter("PNG", "*.png"),
+            new FileChooser.ExtensionFilter("JPG", "*.jpg", "*.jpeg", "*.JPG", ".JPEG"),
+            new FileChooser.ExtensionFilter("PNG", "*.png", "*.PNG"),
             new FileChooser.ExtensionFilter("Others", "*.*")
         );
 

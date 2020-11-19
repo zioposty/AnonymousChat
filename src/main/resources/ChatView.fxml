@@ -48,8 +48,8 @@
          <Font name="Impact" size="23.0" />
       </font>
    </Label>
-   <Button layoutX="765.0" layoutY="375.0" mnemonicParsing="false" onAction="#addEmoji" prefHeight="57.0" prefWidth="122.0" text="Add emoji" />
-   <Button layoutX="523.0" layoutY="460.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="57.0" prefWidth="122.0" text="Add image" />
+   <Button layoutX="765.0" layoutY="375.0" mnemonicParsing="false" onAction="#addEmoji" prefHeight="57.0" prefWidth="150.0" text="Add emoji" />
+   <Button layoutX="476.0" layoutY="460.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="57.0" prefWidth="187.0" text="Add image" />
    <Button fx:id="cancelImgButton" layoutX="619.0" layoutY="614.0" mnemonicParsing="false" onAction="#removeImage" prefHeight="37.0" prefWidth="38.0" style="-fx-background-image: url(Images/cancel.png); -fx-background-size: contain; -fx-border-width: 0 0 0 0; -fx-font-size: 10" visible="false" />
    <Label layoutX="472.0" layoutY="47.0" prefHeight="28.0" prefWidth="226.0" text="Room manager">
       <font>

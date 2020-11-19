@@ -324,7 +324,8 @@ public class ChatViewController {
         chooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"),
             new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-            new FileChooser.ExtensionFilter("PNG", "*.png")
+            new FileChooser.ExtensionFilter("PNG", "*.png"),
+            new FileChooser.ExtensionFilter("Others", "*.*")
         );
 
         File file = chooser.showOpenDialog(sceneManager.getOpenedStage());
@@ -375,7 +376,10 @@ public class ChatViewController {
             opInfo.setText("You have already joined " + roomName);
         }
         else
-            if(peerManager.getPeer().joinRoom(roomName))    addTabChat(roomName);
+            if(peerManager.getPeer().joinRoom(roomName)){
+                addTabChat(roomName);
+                opInfo.setText(roomName + " joined!");
+            }
             else opInfo.setText(roomName + "doesn't exist");
 
 

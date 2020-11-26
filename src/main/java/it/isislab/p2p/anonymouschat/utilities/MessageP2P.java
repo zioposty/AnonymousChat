@@ -1,10 +1,7 @@
 package it.isislab.p2p.anonymouschat.utilities;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -53,7 +50,8 @@ public class MessageP2P implements Serializable {
         this.message = message;
     }
 
-    public SerializableImage getImage() {
-        return image;
+    public Image getImage() {
+        if(image == null) return  null;
+        return image.getImage();
     }
 }

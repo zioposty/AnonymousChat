@@ -23,10 +23,14 @@ public class AnonymousChatImpl implements AnonymousChat {
     final private PeerDHT _dht;
     final private int DEFAULT_MASTER_PORT=4000;
 
-    final private ArrayList<String> chat_joined =new ArrayList<>();
 
-    public AnonymousChatImpl( int _id, String _master_peer, final MessageListener _listener) throws Exception
-    {
+    final private ArrayList<String> chatJoined =new ArrayList<>();
+    public ArrayList<String> getChatJoined() {
+        return chatJoined;
+    }
+
+
+    public AnonymousChatImpl( int _id, String _master_peer, final MessageListener _listener) throws Exception {
         //preparazione a poter entrare nella rete
         peer= new PeerBuilder(Number160.createHash(_id)).ports(DEFAULT_MASTER_PORT+_id).start();
         _dht = new PeerBuilderDHT(peer).start();
@@ -72,6 +76,8 @@ public class AnonymousChatImpl implements AnonymousChat {
     @SuppressWarnings("unchecked")
     public boolean joinRoom(String _room_name) {
 
+        if(chatJoined.contains(_room_name)) return false;
+
         try {
             FutureGet futureGet = _dht.get(Number160.createHash(_room_name)).start();
             futureGet.awaitUninterruptibly();
@@ -83,7 +89,7 @@ public class AnonymousChatImpl implements AnonymousChat {
                 peers_on_topic.add(_dht.peer().peerAddress());
 
                 _dht.put(Number160.createHash(_room_name)).data(new Data(peers_on_topic)).start().awaitUninterruptibly();
-                chat_joined.add(_room_name);
+                chatJoined.add(_room_name);
                 System.out.println("Room joined :" + _room_name);
                 return true;
             }
@@ -105,7 +111,7 @@ public class AnonymousChatImpl implements AnonymousChat {
                 peers_on_topic = (HashSet<PeerAddress>) futureGet.dataMap().values().iterator().next().object();
                 peers_on_topic.remove(_dht.peer().peerAddress());
                 _dht.put(Number160.createHash(_room_name)).data(new Data(peers_on_topic)).start().awaitUninterruptibly();
-                chat_joined.remove(_room_name);
+                chatJoined.remove(_room_name);
                 System.out.println("Leaved: " + _room_name);
                 return true;
             }
@@ -140,9 +146,10 @@ public class AnonymousChatImpl implements AnonymousChat {
         return false;
     }
 
+
     public boolean leaveNetwork() {
 
-        for(String room: new ArrayList<String>(chat_joined)) leaveRoom(room);
+        for(String room: new ArrayList<String>(chatJoined)) leaveRoom(room);
         _dht.peer().announceShutdown().start().awaitUninterruptibly();
         return true;
     }

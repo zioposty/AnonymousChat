@@ -5,11 +5,9 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,7 +40,7 @@ public class PeerManager {
                 ImageView image = new ImageView();
                 if(!(mss.getImage() == null))
                 {
-                    image.setImage(mss.getImage().getImage());
+                    image.setImage(mss.getImage());
                     image.setFitHeight(100);
                     image.setPreserveRatio(true);
                 }

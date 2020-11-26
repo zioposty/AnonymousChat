@@ -1,7 +1,6 @@
 package it.isislab.p2p.anonymouschat;
 
 import it.isislab.p2p.anonymouschat.utilities.SceneManager;
-import it.isislab.p2p.anonymouschat.utilities.VoiceFreeTTS;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

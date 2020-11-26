@@ -2,7 +2,6 @@ package it.isislab.p2p.anonymouschat;
 
 import it.isislab.p2p.anonymouschat.utilities.PeerManager;
 import it.isislab.p2p.anonymouschat.utilities.SceneManager;
-import it.isislab.p2p.anonymouschat.utilities.VoiceFreeTTS;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.stage.Stage;

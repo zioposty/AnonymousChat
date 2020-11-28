@@ -85,7 +85,7 @@ public class ChatViewController {
         peerManager.removeChat(t.getId());
         peerManager.getPeer().leaveRoom(t.getId());
         //System.out.println("Leaving " + t.getId());
-        System.out.println(peerManager.getChat().toString());
+        System.out.println(peerManager.getChat().toString()  + "\n" + peerManager.getPeer().getChatJoined().toString());
     }
 
     public void joinRoom(ActionEvent actionEvent) {

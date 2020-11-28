@@ -126,6 +126,8 @@ public class AnonymousChatImpl implements AnonymousChat {
     public boolean sendMessage(String _room_name, Object _text_message) {
 
         try {
+
+            if(!chatJoined.contains(_room_name)) return false;
             FutureGet futureGet = _dht.get(Number160.createHash(_room_name)).start();
             futureGet.awaitUninterruptibly();
             if (futureGet.isSuccess()) {

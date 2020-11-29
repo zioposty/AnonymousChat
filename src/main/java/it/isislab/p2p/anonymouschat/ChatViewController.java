@@ -219,7 +219,8 @@ public class ChatViewController {
 
                 notificationLock.lock();
                 try {
-                    notificationList.getItems().add(NOTIF_MSS + roomName);                    if (notificationList.getItems().size() > NOTIF_MAX_NUMBER)
+                    notificationList.getItems().add(NOTIF_MSS + roomName);
+                    if (notificationList.getItems().size() > NOTIF_MAX_NUMBER)
                         notificationList.getItems().remove(0);
                 }
                 finally {
@@ -257,40 +258,29 @@ public class ChatViewController {
         String mss = messageField.getText().trim();
         if((mss.isBlank() && imagePath.isBlank()) || peerManager.getChat().size() == 0) return;
         messageField.setText("");
-        MessageP2P message;
-        if (imagePath.isBlank()) message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
-        else
-            message = new MessageP2P(chatTabs.getSelectionModel().getSelectedItem().getText(), mss, imagePath);
-        cancelImgButton.fire();
-        System.out.println("Sending: " + message.getMessage() + " to " + message.getRoom());
-        System.out.println( peerManager.getPeer().sendMessage(message.getRoom(), message));
+        if (imagePath.isBlank())
+            peerManager.getPeer().sendMessage(chatTabs.getSelectionModel().getSelectedItem().getText(), mss);
+        else {
+            peerManager.getPeer().sendImage(chatTabs.getSelectionModel().getSelectedItem().getText(), mss, imagePath);
+            cancelImgButton.fire();
+        }
+        System.out.println("Sending: " + mss + " to " +chatTabs.getSelectionModel().getSelectedItem().getText());
     }
 
     public void broadcastMessage(ActionEvent actionEvent) {
 
-        MessageP2P message = new MessageP2P();
         String mss = messageField.getText().trim();
         if((mss.isBlank() && imagePath.isBlank()) || peerManager.getChat().size() == 0) return;
 
         messageField.setText("");
 
-        message.setMessage(mss);
         if(!imagePath.isBlank()) {
-            try {
-                message.setImage(imagePath);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            peerManager.getPeer().broadcast(mss, imagePath);
             cancelImgButton.fire();
         }
-            System.out.println("Broadcasting: " + message.getMessage());
+        else  peerManager.getPeer().broadcast(mss);
 
-
-        for (Tab t: chatTabs.getTabs()) {
-            message.setRoom(t.getText());
-            peerManager.getPeer().sendMessage(t.getText(), message);
-        }
-
+        System.out.println("Broadcasting: " + mss);
 
     }
 

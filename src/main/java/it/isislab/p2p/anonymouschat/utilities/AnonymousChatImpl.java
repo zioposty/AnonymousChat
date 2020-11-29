@@ -123,7 +123,7 @@ public class AnonymousChatImpl implements AnonymousChat {
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean sendMessage(String _room_name, Object _text_message) {
+    public boolean sendMessage(String _room_name, String _text_message) {
 
         try {
 
@@ -136,7 +136,9 @@ public class AnonymousChatImpl implements AnonymousChat {
 
                 for(PeerAddress peer:peers_on_topic)
                 {
-                    FutureDirect futureDirect = _dht.peer().sendDirect(peer).object(_text_message).start();
+
+                    MessageP2P sms = new MessageP2P(_room_name, _text_message);
+                    FutureDirect futureDirect = _dht.peer().sendDirect(peer).object(sms).start();
                     futureDirect.awaitUninterruptibly();
                 }
 
@@ -148,6 +150,48 @@ public class AnonymousChatImpl implements AnonymousChat {
         return false;
     }
 
+    @SuppressWarnings("unchecked")
+    public boolean sendImage(String _room_name, String _text_message, String imagePath)
+    {
+        try {
+
+            if(!chatJoined.contains(_room_name)) return false;
+            FutureGet futureGet = _dht.get(Number160.createHash(_room_name)).start();
+            futureGet.awaitUninterruptibly();
+            if (futureGet.isSuccess()) {
+                HashSet<PeerAddress> peers_on_topic;
+                peers_on_topic = (HashSet<PeerAddress>) futureGet.dataMap().values().iterator().next().object();
+
+                for(PeerAddress peer:peers_on_topic)
+                {
+
+                    MessageP2P sms = new MessageP2P(_room_name, _text_message, imagePath);
+                    FutureDirect futureDirect = _dht.peer().sendDirect(peer).object(sms).start();
+                    futureDirect.awaitUninterruptibly();
+                }
+
+                return true;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean broadcast(String _text_message){
+
+        for (String room: chatJoined)
+            if(!sendMessage(room, _text_message)) return false;
+
+        return true;
+    }
+
+    public boolean broadcast(String _text_message, String imagePath){
+        for (String room: chatJoined)
+            if(!sendImage(room, _text_message, imagePath)) return false;
+
+        return true;
+    }
 
     public boolean leaveNetwork() {
 

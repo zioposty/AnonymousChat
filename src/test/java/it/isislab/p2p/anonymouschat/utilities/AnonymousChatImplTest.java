@@ -114,13 +114,13 @@ class AnonymousChatImplTest {
         m3 = new MessageP2P(r2, "sms3");
 
 
-        assertTrue(p0.sendMessage(r1, m0), "errore nell'invio del messagio");
-        assertTrue(p1.sendMessage(r1, m1), "errore nell'invio del messagio");
-        assertTrue(p2.sendMessage(r2, m2), "errore nell'invio del messagio");
-        assertTrue(p3.sendMessage(r2, m3), "errore nell'invio del messagio");
+        assertTrue(p0.sendMessage(r1, m0.getMessage()), "errore nell'invio del messagio");
+        assertTrue(p1.sendMessage(r1, m1.getMessage()), "errore nell'invio del messagio");
+        assertTrue(p2.sendMessage(r2, m2.getMessage()), "errore nell'invio del messagio");
+        assertTrue(p3.sendMessage(r2, m3.getMessage()), "errore nell'invio del messagio");
 
         //sleep per essere certo della ricezione dei messaggi
-        sleep(500);
+        sleep(2000);
         checkMessages();
 
     }

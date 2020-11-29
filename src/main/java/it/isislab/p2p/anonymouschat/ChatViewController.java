@@ -61,6 +61,7 @@ public class ChatViewController {
                 public void changed(ObservableValue<? extends Tab> ov, Tab oldT, Tab newT) {
                     if (newT == null) return;
 
+                    while(notificationList.getItems().remove(NOTIF_MSS + newT.getText()));
                     newT.setStyle(null);
                     titleChat.setText(newT.getText());
                 }
@@ -81,9 +82,11 @@ public class ChatViewController {
 
     private void removeChat(Event e){
         Tab tab1 = (Tab) e.getSource();
+
         TextFlow t = (TextFlow) tab1.getContent().lookup("TextFlow");
         peerManager.removeChat(t.getId());
         peerManager.getPeer().leaveRoom(t.getId());
+        while(notificationList.getItems().remove(NOTIF_MSS + t.getId()));
         //System.out.println("Leaving " + t.getId());
         System.out.println(peerManager.getChat().toString()  + "\n" + peerManager.getPeer().getChatJoined().toString());
     }

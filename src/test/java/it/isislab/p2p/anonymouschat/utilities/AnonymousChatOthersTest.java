@@ -30,7 +30,7 @@ class AnonymousChatOthersTest {
     }
 
 
-    private JFXPanel panel = new JFXPanel();
+   // private JFXPanel panel = new JFXPanel();
 
     private static ArrayList<MessageP2P>[] receivedMessages = new ArrayList[4];
     private static AnonymousChatImpl p0, p1, p2, p3;
@@ -52,7 +52,7 @@ class AnonymousChatOthersTest {
     }
 
     @Test
-    void sendImageTest() throws InterruptedException{
+   /* void sendImageTest() throws InterruptedException{
         String r1 = "testSend";
         String imagePath1 = "testImages/testImage.png", imagePath2 = "testImages/testImage2.jpg";
         Image testImg1 = new Image(imagePath1);
@@ -86,7 +86,7 @@ class AnonymousChatOthersTest {
         //------
 
     }
-
+*/
     private boolean assertEqualsImage(Image expected, Image current) {
         if(expected.getWidth() != current.getWidth() || expected.getHeight() != current.getHeight()) {
             return false;

@@ -3,7 +3,7 @@ WORKDIR /app
 RUN git clone https://github.com/zioposty/AnonymousChatP2P.git
 
 #FROM maven:3-jdk-11
-FROM maven:3-jdk-11
+FROM maven:3-jdk-13
 WORKDIR /app
 COPY --from=0 /app/AnonymousChatP2P /app
 RUN mvn package

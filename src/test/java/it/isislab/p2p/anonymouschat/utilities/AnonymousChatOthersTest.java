@@ -51,8 +51,9 @@ class AnonymousChatOthersTest {
 
     }
 
-    @Test
-   /* void sendImageTest() throws InterruptedException{
+    /*@Test
+    //rimosso perchè non testabile quando deployo su docker
+    void sendImageTest() throws InterruptedException{
         String r1 = "testSend";
         String imagePath1 = "testImages/testImage.png", imagePath2 = "testImages/testImage2.jpg";
         Image testImg1 = new Image(imagePath1);

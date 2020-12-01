@@ -19,5 +19,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends openjfx && rm -
 RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/*
 RUN apt-get remove nvidia*
 CMD java -jar ac-1.0-jar-with-dependencies.jar ${ID} ${MASTERIP}
-
 # -e DISPLAY=192.168.1.36:0.0      da aggiungere al run

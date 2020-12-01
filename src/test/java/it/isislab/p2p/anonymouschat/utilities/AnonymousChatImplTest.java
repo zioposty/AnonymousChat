@@ -45,26 +45,19 @@ class AnonymousChatImplTest {
         receivedMessages[3] = new ArrayList<>();
 
     }
-    @AfterAll
-    static void disconnectAll()
-    {
-        p1.leaveNetwork();
-        p2.leaveNetwork();
-        p3.leaveNetwork();
-        p0.leaveNetwork();
-    }
+
     /**
      * Dopo la creazione di una stanza, non posso crearne una con lo stesso nome
      */
     @Test
-    void createRoom() {
+    void createRoomTest() {
         assertTrue(p1.createRoom("createRoom1"), "createRoom1 non creata");
         assertFalse(p2.createRoom("createRoom1"), "creata una stanza già presente");
         assertTrue(p3.createRoom("createRoom2"), "createRoom2 non creata");
     }
 
     @Test
-    void joinRoom() {
+    void joinRoomTest() {
         assertFalse(p1.joinRoom("room1"), "unito ad una stanza non creata!");
         p1.createRoom("room1");
         assertTrue(p1.joinRoom("room1"), "Errore nel joinare una stanza");
@@ -81,7 +74,7 @@ class AnonymousChatImplTest {
     }
 
     @Test
-    void leaveRoom() {
+    void leaveRoomTest() {
         //non puoi uscire da una stanza in cui non sie mai entrato
         assertFalse(p1.leaveRoom("roomToLeave"), "uscito da una stanza mai creata/joinata");
         p1.createRoom("roomToLeave");
@@ -95,7 +88,7 @@ class AnonymousChatImplTest {
     }
 
     @Test
-    void sendMessage() throws InterruptedException {
+    void sendMessageTest() throws InterruptedException {
         String r1 = "testSend", r2 = "testSend2";
         assertFalse(p0.sendMessage(r1, "sms1"), "messaggio inviato in una stanza mai creata!");
         p0.createRoom(r1);
@@ -139,13 +132,26 @@ class AnonymousChatImplTest {
         assertTrue(receivedMessages[3].contains(m2.getMessage()));
         assertTrue(receivedMessages[3].contains(m3.getMessage()));
 
+        clearMessages();
     }
 
-    @Test
-    void leaveNetwork() {
-        p1.leaveNetwork();
-        p2.leaveNetwork();
-        p3.leaveNetwork();
-        p0.leaveNetwork();
+    void clearMessages(){
+        for(int i = 0; i< 4; i++)
+            receivedMessages[i].clear();
+    }
+
+    @AfterAll
+    static void leaveNetwork() {
+        assertTrue(p1.leaveNetwork(), "impossibile abbandonare la rete!");
+        assertTrue(p2.leaveNetwork(), "impossibile abbandonare la rete!");
+        assertTrue(p3.leaveNetwork(), "impossibile abbandonare la rete!");
+        assertTrue(p0.leaveNetwork(), "impossibile abbandonare la rete!");
+
+        assertEquals(0 , p0.getChatJoined().size());
+        assertEquals(0 , p1.getChatJoined().size());
+        assertEquals(0 , p2.getChatJoined().size());
+        assertEquals(0 , p3.getChatJoined().size());
+
+
     }
 }

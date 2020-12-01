@@ -1,7 +1,6 @@
 package it.isislab.p2p.anonymouschat.utilities;
-import java.awt.image.BufferedImage;
-
-import javafx.embed.swing.SwingFXUtils;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import org.junit.jupiter.api.*;
 
@@ -30,6 +29,7 @@ class AnonymousChatOthersTest {
         }
     }
 
+    private JFXPanel panel = new JFXPanel();
     private static ArrayList<MessageP2P>[] receivedMessages = new ArrayList[4];
     private static AnonymousChatImpl p0, p1, p2, p3;
 
@@ -50,10 +50,10 @@ class AnonymousChatOthersTest {
     }
 
     @Test
-   /* void sendImageTest() throws InterruptedException{
+    void sendImageTest() throws InterruptedException{
         String r1 = "testSend";
         String imagePath1 = "testImages/testImage.png", imagePath2 = "testImages/testImage2.jpg";
-        Image testImg1 = new ImageIcon(new BufferedImage());
+        Image testImg1 = new Image(imagePath1);
 
         assertFalse(p0.sendImage(r1, "sms1", imagePath1), "messaggio inviato in una stanza mai creata!");
         p0.createRoom(r1);
@@ -98,11 +98,11 @@ class AnonymousChatOthersTest {
 
         for(int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++)
-                if (p1.getArgb(i, j) != p2.getArgb(i, j)) return false;
+                if (p1.getArgb(j, i) != p2.getArgb(j, i)) return false;
         }
         return true;
     }
-*/
+
 
     @AfterAll
     static void leaveNetwork() {

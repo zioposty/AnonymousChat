@@ -1,10 +1,13 @@
 package it.isislab.p2p.anonymouschat.utilities;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
 import org.junit.jupiter.api.*;
-
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -20,13 +23,25 @@ class AnonymousChatImplTest {
         @Override
         public Object parseMessage(Object obj) {
 
-            receivedMessages[peer].add(((MessageP2P) obj).getMessage());
-            return "success";
-        }
+            try{
+                lock.lock();
+                receivedMessages[peer].add((MessageP2P) obj);
+                condition.notify();
+            }
+            finally {
+                lock.unlock();
+            }
+
+        return "success";
+    }
     }
 
-    private static ArrayList<String>[] receivedMessages = new ArrayList[4];
+    private static ArrayList<MessageP2P>[] receivedMessages = new ArrayList[4];
     private static AnonymousChatImpl p0, p1, p2, p3;
+    static Lock lock = new ReentrantLock();
+    static Condition condition = lock.newCondition();
+
+   // JFXPanel panel = new JFXPanel();
 
     private MessageP2P m0, m1, m2, m3;
 
@@ -89,6 +104,9 @@ class AnonymousChatImplTest {
 
     @Test
     void sendMessageTest() throws InterruptedException {
+
+        clearMessages();
+
         String r1 = "testSend", r2 = "testSend2";
         assertFalse(p0.sendMessage(r1, "sms1"), "messaggio inviato in una stanza mai creata!");
         p0.createRoom(r1);
@@ -112,25 +130,61 @@ class AnonymousChatImplTest {
         assertTrue(p2.sendMessage(r2, m2.getMessage()), "errore nell'invio del messagio");
         assertTrue(p3.sendMessage(r2, m3.getMessage()), "errore nell'invio del messagio");
 
-        //sleep per essere certo della ricezione dei messaggi
-        sleep(2000);
         checkMessages();
 
     }
 
-    private void checkMessages() {
 
-        assertTrue(receivedMessages[1].contains(m0.getMessage()));
-        assertTrue(receivedMessages[1].contains(m1.getMessage()));
 
-        assertTrue(receivedMessages[1].contains(m0.getMessage()));
-        assertTrue(receivedMessages[1].contains(m1.getMessage()));
+    public void leaveChats(AnonymousChatImpl peer){
+        for (String s:
+            new ArrayList<>(peer.getChatJoined()) ) {
 
-        assertTrue(receivedMessages[2].contains(m2.getMessage()));
-        assertTrue(receivedMessages[2].contains(m3.getMessage()));
+            peer.leaveRoom(s);
+        }
+    }
 
-        assertTrue(receivedMessages[3].contains(m2.getMessage()));
-        assertTrue(receivedMessages[3].contains(m3.getMessage()));
+    private void checkMessages() throws InterruptedException {
+        try {
+            lock.lock();
+            while (receivedMessages[0].size() <2) { condition.await(); }
+            assertEquals(m0.getMessage(), receivedMessages[0].get(0).getMessage());
+            assertEquals(m1.getMessage(), receivedMessages[0].get(1).getMessage());
+        }
+        finally {
+            lock.unlock();
+        }
+
+        try {
+            lock.lock();
+            while (receivedMessages[1].size() <2) { condition.await(); }
+            assertEquals(m0.getMessage(), receivedMessages[1].get(0).getMessage());
+            assertEquals(m1.getMessage(), receivedMessages[1].get(1).getMessage());
+        }
+        finally {
+            lock.unlock();
+        }
+
+
+        try {
+            lock.lock();
+            while (receivedMessages[2].size() <2) { condition.await(); }
+            assertEquals(m2.getMessage(), receivedMessages[2].get(0).getMessage());
+            assertEquals(m3.getMessage(), receivedMessages[2].get(1).getMessage());
+        }
+        finally {
+            lock.unlock();
+        }
+
+        try {
+            lock.lock();
+            while (receivedMessages[3].size() <2) { condition.await(); }
+            assertEquals(m2.getMessage(), receivedMessages[3].get(0).getMessage());
+            assertEquals(m3.getMessage(), receivedMessages[3].get(1).getMessage());
+        }
+        finally {
+            lock.unlock();
+        }
 
         clearMessages();
     }
@@ -139,6 +193,184 @@ class AnonymousChatImplTest {
         for(int i = 0; i< 4; i++)
             receivedMessages[i].clear();
     }
+
+
+    //----------
+ /*   @Test
+    void sendImageTest() throws InterruptedException {
+        String r1 = "testSend";
+        String imagePath1 = "testImages/testImage.png", imagePath2 = "testImages/testImage2.jpg";
+        Image testImg1 = new Image(imagePath1);
+
+        assertFalse(p0.sendImage(r1, "sms1", imagePath1), "messaggio inviato in una stanza mai creata!");
+        p0.createRoom(r1);
+        assertFalse(p0.sendImage(r1, "sms1", imagePath2), "messaggio inviato in una stanza in cui non partecipi!");
+        p0.joinRoom(r1);
+        p1.joinRoom(r1);
+        p2.joinRoom(r1);
+
+       clearMessages();
+
+
+        //------
+        assertTrue(p0.sendImage(r1, "sms1", imagePath1), "errore nell'inviare immagine");
+
+        Image img0= null, img1 = null, img2 = null;
+        String mss0 ="", mss1="", mss2="";
+        try {
+            lock.lock();
+            while(receivedMessages[0].size() == 0) {condition.await();}
+            img0 = receivedMessages[0].get(0).getImage();
+            mss0 = receivedMessages[0].get(0).getMessage();
+
+        }
+        finally {
+            lock.unlock();
+        }
+
+        try {
+            lock.lock();
+            while(receivedMessages[1].size() == 0){condition.await();}
+            img1 = receivedMessages[1].get(0).getImage();
+            mss1 = receivedMessages[1].get(0).getMessage();
+
+        }
+        finally {
+            lock.unlock();
+        }
+
+        try {
+            lock.lock();
+            while(receivedMessages[2].size() == 0) {condition.await();};
+            img2 = receivedMessages[2].get(0).getImage();
+            mss2 = receivedMessages[2].get(0).getMessage();
+
+        }
+        finally {
+            lock.unlock();
+        }
+        //---
+        assertEquals("sms1", mss0, "errore ricezione messaggio peer0");
+        assertEquals("sms1", mss1, "errore ricezione messaggio peer1");
+        assertEquals("sms1", mss2, "errore ricezione messaggio peer2");
+
+        assertTrue(assertEqualsImage(testImg1, img0), "errore ricezione immagine peer0");
+        assertTrue(assertEqualsImage(testImg1, img1), "errore ricezione immagine peer1");
+        assertTrue(assertEqualsImage(testImg1, img2), "errore ricezione immagine peer2");
+
+        //------
+
+        leaveChats(p0);
+        leaveChats(p1);
+        leaveChats(p2);
+    }   */
+    private boolean assertEqualsImage(Image expected, Image current) {
+        if(expected.getWidth() != current.getWidth() || expected.getHeight() != current.getHeight()) {
+            return false;
+        }
+
+        int width  = (int) expected.getWidth();
+        int height = (int) current.getHeight();
+
+        PixelReader p1 = expected.getPixelReader();
+        PixelReader p2 = expected.getPixelReader();
+
+        for(int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++)
+                if (p1.getArgb(j, i) != p2.getArgb(j, i)) return false;
+        }
+        return true;
+    }
+
+
+    @Test
+    void broadCastMessageTest() throws InterruptedException {
+        String r1= "broad1", r2 = "broad2";
+        String sms = "testMessage";
+        p0.createRoom(r1);
+        p0.createRoom(r2);
+        p0.joinRoom(r1);
+        p1.joinRoom(r1);
+
+        p0.joinRoom(r2);
+        p2.joinRoom(r2);
+        p3.joinRoom(r2);
+
+        receivedMessages[0].clear();
+        receivedMessages[1].clear();
+        receivedMessages[2].clear();
+        receivedMessages[3].clear();
+
+        //----
+
+        assertTrue(p0.broadcast(sms), "Errore durante il broadcast del peer0");
+
+        String mss0_0 ="", mss0_1 ="", mss1="", mss2="", mss3 ="";
+
+        try {
+            lock.lock();
+            while(receivedMessages[0].size() < 2) {condition.await();}
+            mss0_0 = receivedMessages[0].get(0).getMessage();
+            mss0_1 = receivedMessages[0].get(1).getMessage();
+        }
+        finally {
+            lock.unlock();
+        }
+
+        try {
+            lock.lock();
+            while(receivedMessages[1].size() == 0){condition.await();}
+            mss1 = receivedMessages[1].get(0).getMessage();
+
+        }
+        finally {
+            lock.unlock();
+        }
+
+        try {
+            lock.lock();
+            while(receivedMessages[2].size() == 0){condition.await();}
+            mss2 = receivedMessages[2].get(0).getMessage();
+
+        }
+        finally {
+            lock.unlock();
+        }
+
+        try {
+            lock.lock();
+            while(receivedMessages[3].size() == 0){condition.await();}
+            mss3 = receivedMessages[3].get(0).getMessage();
+
+        }
+        finally {
+            lock.unlock();
+        }
+
+
+        assertEquals(sms, mss0_0, "errore ricezione messaggio peer0");
+        assertEquals(sms, mss0_1, "errore ricezione messaggio peer0");
+        assertEquals(sms, mss1, "errore ricezione messaggio peer1");
+        assertEquals(sms, mss2, "errore ricezione messaggio peer2");
+        assertEquals(sms, mss3, "errore ricezione messaggio peer3");
+
+
+
+        leaveChats(p0);
+        leaveChats(p1);
+        leaveChats(p2);
+        leaveChats(p3);
+    }
+
+
+    @AfterEach
+    public void leaveAll(){
+        leaveChats(p0);
+        leaveChats(p1);
+        leaveChats(p2);
+        leaveChats(p3);
+    }
+
 
     @AfterAll
     static void leaveNetwork() {
@@ -154,4 +386,6 @@ class AnonymousChatImplTest {
 
 
     }
+
+
 }

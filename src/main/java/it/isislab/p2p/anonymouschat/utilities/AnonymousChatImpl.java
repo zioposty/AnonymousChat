@@ -179,6 +179,7 @@ public class AnonymousChatImpl implements AnonymousChat {
     }
 
     public boolean broadcast(String _text_message){
+        if(chatJoined.size()==0) return false;
 
         for (String room: chatJoined)
             if(!sendMessage(room, _text_message)) return false;
@@ -187,6 +188,8 @@ public class AnonymousChatImpl implements AnonymousChat {
     }
 
     public boolean broadcast(String _text_message, String imagePath){
+        if(chatJoined.size() == 0) return false;
+
         for (String room: chatJoined)
             if(!sendImage(room, _text_message, imagePath)) return false;
 

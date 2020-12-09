@@ -6,10 +6,6 @@
 # AnonymousChat: che cos'è?
 Si tratta di una applicazione P2P che permette di unirsi o creare una o più chatroom in cui conversare, il tutto in maniera anonima.  
 
-<img src="src/main/resources/Images/incognito.png" style="height: 150px; display: block;
-    margin-left: auto;
-    margin-right: auto;">  
-
 ## Come è stato sviluppato
 AnonymousChat è sviluppato con il linguaggio Java, facendo uso di Maven come tool di build automation. La rete P2P è realizzata usufrunedo della libreria/framework [TomP2P](https://tomp2p.net/): nello specifico essa mette a disposizione una **DHT** (Distributed Hash Table), ovvero una tabella hash distribuita, la quale funziona con la classica infrastruttura chiave-valore. Per rendere l'applicazione più *user-friendly* è stato utilizzato [OpenJFX](https://openjfx.io) (noto in passato come JavaFX), una piattaforma opensource per la realizzazione di applicazioni client su diversi sistemi: desktop, mobile ma anche embedded che si basano su Java.
 
@@ -60,3 +56,18 @@ Di base la realizzazione di una chat distribuita non si discosta molto da quella
   <img src="readmeImg/chat.PNG">  
   
 # Struttura della soluzione
+Il progetto ha la tipica struttura di un progetto Java basato su **OpenJFX**, quindi nella suddivisione in:
+<div style="float:left;margin:0 10px 800px;" markdown="1"> 
+  <img src="readmeImg/structure.PNG" style="height: 150px; 
+    display: inline-block;">  
+</div>  
+ <div style="margin-left: 10%;">
+
+- I Controller, ovvero classi Java che si occupano della gestione degli eventi di una GUI;
+- Le Resources, componenti fondamentali della intefaccia grafica:
+    - File FMXL, ovvero file scritti in FMXL, linguaggio di markup utilizzato per la definizione dell'interfaccia grafica per applicazioni JavaFX;
+    - File CSS integrare la formattazione e lo stile alle interfacce definite nei file FXML;
+    - Altre risorse (es. immagini, font, ecc...) come il logo o il font per visualizzare le emoji nelle componenti testuali;
+- Altre classi Java, che definiscono gli oggetti da utilizzare all'interno dei Controller;
+- 
+</div>

@@ -521,3 +521,29 @@ Durante lo sviluppo di AnonymousChat, e nello specifico durante il testing delle
 - Problematiche di compatibilità con alcune schede Nvidia (quella da me utilizzata inclusa tra queste) che non permettono la corretta visualizzazione di menù a tendina o finestre pop-up per operazioni di conferma.
 
 Nessuna parte di codice sopracitata è stata rimossa del tutto, quindi facilmente ripristinabile in locale.
+#
+## Build della applicazione in un Docker Container
+Il progetto è accompagnto da un Dockerfile che permette il deploy della applicazione in un container.  
+Rispetto al modello del progetto del professor Spagnuolo, sono state apporttate varie modifiche/aggiunte:
+- Si usa una versione più recente di Java, di conseguenza bisogna installare **OpenJFX**, essendo non più integrato nella SDK;
+- Installazione delle API *OpenGL*, utilizzate per la grafica da parte di JFX;
+- Copia di una cartella con immagini di test, per poter provare la funzionalità di invio di immagini;  
+
+Date queste varie aggiunte, il processo di build risulta più lungo rispetto alla applicazione per il *Publish/Subscribe*.
+
+La build può essere effettuata, una volta giunti nella directory del progetto, con il comando:  
+```docker build --no-cache -t p2p-pp-client .```  
+
+Si può procedere poi al lancio del *peer master*:  
+```docker run -i --name MASTER-PEER -e DISPLAY=host.docker.internal:0.0 -e MASTERIP="127.0.0.1" -e ID=0 p2p-ac-client```
+
+- *MASTERIP*: variabile di ambiente che contiene l'iindirizzo del *master peer*;  
+- *ID*: identificativo del peer nella rete. ID = 0 è esclusivo del master;
+- *DISPLAY*: host in cui eseguire ed eventualmente indicare schermi e display su cui eseguire (vedere la sezione precedente per più info);
+
+Per eseguire un generico peer bisogna prima verificare l'IP del master, verificabile con i seguenti passi:
+1. Lista dei container: ```docker ps```
+2. Controllo dell'IP del container *MASTER-PEER*: ```docker inspect <container ID>```
+
+Fatto questo si possono lanciare altri peer (importante che abbiamo un ID > 0):  
+```docker run -i --name PEER-1 -e DISPLAY=host.docker.internal:0.0 -e MASTERIP="172.17.0.2" -e ID=1 p2p-ac-client```

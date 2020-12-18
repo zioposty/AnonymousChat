@@ -13,6 +13,7 @@ WORKDIR /app
 COPY --from=1 /app/testImages /app
 ENV MASTERIP=127.0.0.1
 ENV ID=0
+ENV DISPLAY=host.docker.internal:0.0
 COPY --from=1 /app/target/ac-1.0-jar-with-dependencies.jar /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends openjfx && rm -rf /var/lib/apt/lists/*

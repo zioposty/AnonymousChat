@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import org.junit.jupiter.api.*;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -33,7 +34,7 @@ class AnonymousChatImplTest {
             }
 
         return "success";
-    }
+        }
     }
 
     private static ArrayList<MessageP2P>[] receivedMessages = new ArrayList[4];
@@ -41,16 +42,16 @@ class AnonymousChatImplTest {
     static Lock lock = new ReentrantLock();
     static Condition condition = lock.newCondition();
 
-   // JFXPanel panel = new JFXPanel();
+    //JFXPanel panel = new JFXPanel();
 
     private MessageP2P m0, m1, m2, m3;
 
     @BeforeAll
     static void createPeers() throws Exception {
-        p0 = new AnonymousChatImpl(0, "127.0.0.1", new MessageListenerImpl(0));
-        p1 = new AnonymousChatImpl(1, "127.0.0.1", new MessageListenerImpl(1));
-        p2 = new AnonymousChatImpl(2, "127.0.0.1", new MessageListenerImpl(2));
-        p3 = new AnonymousChatImpl(3, "127.0.0.1", new MessageListenerImpl(3));
+        assertDoesNotThrow(()->{p0 = new AnonymousChatImpl(0, "127.0.0.1", new MessageListenerImpl(0));});
+        assertDoesNotThrow(()->{p1 = new AnonymousChatImpl(1, "127.0.0.1", new MessageListenerImpl(1));});
+        assertDoesNotThrow(()->{p2 = new AnonymousChatImpl(2, "127.0.0.1", new MessageListenerImpl(2));});
+        assertDoesNotThrow(()->{p3 = new AnonymousChatImpl(3, "127.0.0.1", new MessageListenerImpl(3));});
 
         assertThrows(Exception.class, () -> {new AnonymousChatImpl(0, "127.0.0.2", new MessageListenerImpl(0));});
 
@@ -147,7 +148,7 @@ class AnonymousChatImplTest {
     private void checkMessages() throws InterruptedException {
         try {
             lock.lock();
-            while (receivedMessages[0].size() <2) { condition.await(); }
+            while (receivedMessages[0].size() <2) { assertTrue(condition.await(5000, TimeUnit.MILLISECONDS)); }
             assertEquals(m0.getMessage(), receivedMessages[0].get(0).getMessage());
             assertEquals(m1.getMessage(), receivedMessages[0].get(1).getMessage());
         }
@@ -157,7 +158,7 @@ class AnonymousChatImplTest {
 
         try {
             lock.lock();
-            while (receivedMessages[1].size() <2) { condition.await(); }
+            while (receivedMessages[1].size() <2) { assertTrue(condition.await(5000, TimeUnit.MILLISECONDS)); }
             assertEquals(m0.getMessage(), receivedMessages[1].get(0).getMessage());
             assertEquals(m1.getMessage(), receivedMessages[1].get(1).getMessage());
         }
@@ -168,7 +169,7 @@ class AnonymousChatImplTest {
 
         try {
             lock.lock();
-            while (receivedMessages[2].size() <2) { condition.await(); }
+            while (receivedMessages[2].size() <2) { assertTrue(condition.await(5000, TimeUnit.MILLISECONDS)); }
             assertEquals(m2.getMessage(), receivedMessages[2].get(0).getMessage());
             assertEquals(m3.getMessage(), receivedMessages[2].get(1).getMessage());
         }
@@ -178,7 +179,7 @@ class AnonymousChatImplTest {
 
         try {
             lock.lock();
-            while (receivedMessages[3].size() <2) { condition.await(); }
+            while (receivedMessages[3].size() <2) { assertTrue(condition.await(5000, TimeUnit.MILLISECONDS)); }
             assertEquals(m2.getMessage(), receivedMessages[3].get(0).getMessage());
             assertEquals(m3.getMessage(), receivedMessages[3].get(1).getMessage());
         }
@@ -196,7 +197,8 @@ class AnonymousChatImplTest {
 
 
     //----------
- /*   @Test
+    /*
+    @Test
     void sendImageTest() throws InterruptedException {
         String r1 = "testSend";
         String imagePath1 = "testImages/testImage.png", imagePath2 = "testImages/testImage2.jpg";
@@ -219,7 +221,7 @@ class AnonymousChatImplTest {
         String mss0 ="", mss1="", mss2="";
         try {
             lock.lock();
-            while(receivedMessages[0].size() == 0) {condition.await();}
+            while(receivedMessages[0].size() == 0) {  assertTrue(condition.await(5000, TimeUnit.MILLISECONDS)); }
             img0 = receivedMessages[0].get(0).getImage();
             mss0 = receivedMessages[0].get(0).getMessage();
 
@@ -230,7 +232,7 @@ class AnonymousChatImplTest {
 
         try {
             lock.lock();
-            while(receivedMessages[1].size() == 0){condition.await();}
+            while(receivedMessages[1].size() == 0){ assertTrue(condition.await(5000, TimeUnit.MILLISECONDS));}
             img1 = receivedMessages[1].get(0).getImage();
             mss1 = receivedMessages[1].get(0).getMessage();
 
@@ -241,7 +243,7 @@ class AnonymousChatImplTest {
 
         try {
             lock.lock();
-            while(receivedMessages[2].size() == 0) {condition.await();};
+            while(receivedMessages[2].size() == 0) { assertTrue(condition.await(5000, TimeUnit.MILLISECONDS));};
             img2 = receivedMessages[2].get(0).getImage();
             mss2 = receivedMessages[2].get(0).getMessage();
 
@@ -258,12 +260,8 @@ class AnonymousChatImplTest {
         assertTrue(assertEqualsImage(testImg1, img1), "errore ricezione immagine peer1");
         assertTrue(assertEqualsImage(testImg1, img2), "errore ricezione immagine peer2");
 
-        //------
+    }*/
 
-        leaveChats(p0);
-        leaveChats(p1);
-        leaveChats(p2);
-    }   */
     private boolean assertEqualsImage(Image expected, Image current) {
         if(expected.getWidth() != current.getWidth() || expected.getHeight() != current.getHeight()) {
             return false;

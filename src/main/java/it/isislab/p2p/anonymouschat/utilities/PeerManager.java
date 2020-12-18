@@ -12,11 +12,10 @@ import javafx.scene.text.TextFlow;;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-/*
-*   Singleton per mantenere le informazioni del peer
+/**
+ *   Singleton per mantenere le informazioni del peer
  */
 public class PeerManager {
-
 
     class MessageListenerImpl implements MessageListener {
 

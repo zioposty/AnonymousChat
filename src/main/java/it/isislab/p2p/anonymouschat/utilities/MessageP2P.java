@@ -40,8 +40,6 @@ public class MessageP2P implements Serializable {
         return message;
     }
 
-
-
     public void setRoom(String room) {
         this.room = room;
     }

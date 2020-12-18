@@ -26,7 +26,6 @@ public class InitialManager extends Application {
         Scene scene = new Scene(root);
         SceneManager screenController = SceneManager.getInstance();
         screenController.addScene("mainmenu", FXMLLoader.load(getClass().getResource( "/MainMenu.fxml" )));
-        screenController.addScene("choicemenu", FXMLLoader.load(getClass().getResource( "/ChoiceMenu.fxml" )));
         screenController.addScene("chatview", FXMLLoader.load(getClass().getResource("/ChatView.fxml")));
 
         primaryStage.setScene(scene);

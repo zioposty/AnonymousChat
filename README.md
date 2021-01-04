@@ -4,14 +4,14 @@
      
 
 # AnonymousChat: che cos'è?
-Si tratta di una applicazione P2P che permette di unirsi o creare una o più chatroom in cui conversare, il tutto in maniera anonima.  
+Si tratta di una applicazione P2P che permette di unirsi e/o creare una o più chatroom in cui conversare, il tutto in maniera anonima.  
 
 ## Come è stato sviluppato
-AnonymousChat è sviluppato con il linguaggio Java, facendo uso di Maven come tool di build automation. La rete P2P è realizzata usufrunedo della libreria/framework [TomP2P](https://tomp2p.net/): nello specifico essa mette a disposizione una **DHT** (Distributed Hash Table), ovvero una tabella hash distribuita, la quale funziona con la classica infrastruttura chiave-valore. Per rendere l'applicazione più *user-friendly* è stato utilizzato [OpenJFX](https://openjfx.io) (noto in passato come JavaFX), una piattaforma opensource per la realizzazione di applicazioni client su diversi sistemi: desktop, mobile ma anche embedded che si basano su Java.
+AnonymousChat è sviluppato con il linguaggio Java, facendo uso di Maven come tool di build automation. La rete P2P è realizzata usufrunedo della libreria/framework [TomP2P](https://tomp2p.net/): nello specifico essa mette a disposizione una **DHT** (Distributed Hash Table), ovvero una tabella hash con il classico meccanismo *chiave-valore*, ma utilizzabile nel contesto distribuito delle reti P2P. Per rendere l'applicazione più *user-friendly* è stato utilizzato [OpenJFX](https://openjfx.io) (noto in passato come JavaFX), una piattaforma opensource per la realizzazione di applicazioni client su diversi sistemi: desktop, mobile ma anche embedded che si basano su Java.
 
 ## Idea
-Il progetto è stato realizzato per il corso di Architetture Distribuite per il Cloud, un esame del secondo anno della magistrale di informatica all'Università degli Studi di Salerno, usando come modello di riferimento l'esempio del professor Carmine Spagnuolo sul [paradigma Publish/Subscribe](https://github.com/spagnuolocarmine/p2ppublishsubscribe).  
-    
+Il progetto è stato realizzato per il corso di Architetture Distribuite per il Cloud, un esame del secondo anno della magistrale di informatica all'Università degli Studi di Salerno, usando come modello di riferimento l'esempio del professor Carmine Spagnuolo sul [paradigma Publish/Subscribe](https://github.com/spagnuolocarmine/p2ppublishsubscribe).   
+
     
 # Panoramica della soluzione
 
@@ -46,43 +46,43 @@ public interface AnonymousChat {
 }
 ```
 
-Di base la realizzazione di una chat distribuita non si discosta molto da quella della realizzazione del *paradigma Publish/Subscribe*, di conseguenza molto del focus è stato sull'aggiunta di proprietà, grafica e metodi aggiuntivi:  
+Di base la realizzazione di una chat distribuita non si discosta molto da quella della realizzazione del *paradigma Publish/Subscribe*, di conseguenza molto del focus è stato sull'aggiunta di proprietà, grafica e metodi aggiuntivi:    
 - Non limitarsi ad un programma in esecuzione all'interno di un terminale, ma realizzare una interfaccia grafica per poter velocizzare/migliorare l'esperienza durante l'uso di **AnonymousChat**;  
 <img src="readmeImg/main.PNG">  
   
-- Permettere una corretta visualizzazione delle chat, permettendo all'utente di scegliere quale visualizzare, ma allo stesso tempo essere sempre aggiornato di nuovi messaggi giunti nelle altre;
+- Permettere una corretta visualizzazione delle chat, permettendo all'utente di scegliere quale visualizzare, ma allo stesso tempo essere sempre aggiornato di nuovi messaggi giunti nelle altre attraverso un sistema di notifica;
 - Possibilità di inviare un messaggio a tutte le chat di cui fa parte;
-- Integrare il messaggio con emoji ed eventualmente allegare anche delle immagini;
+- Integrare il messaggio con emoji;
+- Allegare ad un messaggio una immagine caricabile da computer;
   <img src="readmeImg/chat.PNG">  
   
 # Struttura della soluzione
 Il progetto ha la tipica struttura di un progetto Java basato su **OpenJFX**, quindi nella suddivisione in:
-<div style="float:left;margin:0 10px;" markdown="1"> 
+
   <img src="readmeImg/structure.PNG" style="height: 400px; 
     display: inline-block;">  
-</div>  
- <div style="margin-left: 20%;">
+ 
+ 
 
-- I Controller, ovvero classi Java che si occupano della gestione degli eventi di una GUI;
-- Le Resources, componenti fondamentali della intefaccia grafica:
+- Controller, ovvero classi Java che si occupano della gestione degli eventi e di ogni altro aspetto dinamico che coinvolge la GUI;
+- Resources, componenti fondamentali della intefaccia grafica:
     - File FMXL, ovvero file scritti in FMXL, linguaggio di markup utilizzato per la definizione dell'interfaccia grafica per applicazioni JavaFX;
-    - File CSS integrare la formattazione e lo stile alle interfacce definite nei file FXML;
+    - File CSS, che come nelle applicazioni web, permette di definire lo stile delle interfacce definite nei file FXML;
     - Altre risorse (es. immagini, font, ecc...) come il logo o il font per visualizzare le emoji nelle componenti testuali;
-- Altre classi Java, che definiscono gli elementi da utilizzare all'interno dei Controller;
-</div>
+- Altre classi Java, quali *AnonymousChatImpl*;
 
-Di seguito verrà spiegato un po' il codice delle classi principali presenti nel package **utilities**, poichè il core dell'applicazione risiede lì, mentre i Controller si occupano degli eventi quali "Ricevuto un messaggio, lo aggiungo nella chat opportuna, ed eventualmente notifico se la chat aperta è un'altra".  
+
+
+Di seguito verrà spiegato un po' il codice delle classi principali presenti nel package **utilities**, poichè il core dell'applicazione (interazione con la *DHT*) risiede lì, mentre i Controller si occupano degli eventi quali "Ricevuto un messaggio, lo aggiungo nella chat opportuna, ed eventualmente notifico se la chat aperta è un'altra".  
 
 ## AnonymousChat 
 I metodi della interfaccia "AnonymousChat" sono implementati in maniera pressoché identica a quelli del paradigma Publish/Subscribe, tranne per due cose. Prima di eseguire alcuna operazione sulla DHT, verifico se si fa parte di quella chat, in caso di invio messaggi o di left, o se l'utente cerca di joinare una chat di cui fa già parte. In più, il messaggio è l'istanza della mia classe **MessageP2P**, che spiegherò dopo. 
 I metodi extra implementati sono:
 
- <div style="margin-left: 20%;">
 
 - Invio di una immagine;
-- Broadcast di un messaggio;
+- Broadcast di un messaggio, con e senza immagine;
 
-</div>
 <br>
 <br>
 
@@ -94,7 +94,7 @@ public boolean sendImage(String _room_name, String _text_message, String imagePa
     {
         try {
 
-            //il controllo sulla chat
+            // Controllo se si fa parte della chat 
             if(!chatJoined.contains(_room_name)) return false;
 
             FutureGet futureGet = _dht.get(Number160.createHash(_room_name)).start();
@@ -105,7 +105,7 @@ public boolean sendImage(String _room_name, String _text_message, String imagePa
 
                 for(PeerAddress peer:peers_on_topic)
                 {
-                    // Richiamo il costruttore che prevede un path
+                    // Richiamo il costruttore. La classe verrà spiegata in seguito
                     MessageP2P sms = new MessageP2P(_room_name, _text_message, imagePath);
                     FutureDirect futureDirect = _dht.peer().sendDirect(peer).object(sms).start();
                     futureDirect.awaitUninterruptibly();
@@ -120,7 +120,7 @@ public boolean sendImage(String _room_name, String _text_message, String imagePa
     }
 ```
 #
-Per il *broadcast* di messaggi, usando l'**overloading**, espongo il metodo sia per messaggi normali che per invio di immagini.
+Per il *broadcast* di messaggi, usando l'**overloading**, espongo il metodo sia per messaggi normali che per invio di immagini. I metodi devono invocare **N** volte il corrispondente metodo di *send*, dove **N** è il numero di chat di cui si fa parte
 
 ```java
     public boolean broadcast(String _text_message){
@@ -182,7 +182,7 @@ public class MessageP2P implements Serializable {
 #
 ## SerializableImage
 
-Questa classe permette di serializzare/deserializzare una *JFX Image*  decomponendola e ricomponendola utilizzando una matrice di interi, in cui il generico elemento [ i, j ] contiene un intero a 32 bit che definisce il colore del pixel [ i, j ]. Il tutto possibile per mezzo di una istanza della classe **PixelReader**, ottenibile dalla JFX Image stessa
+Questa classe permette di serializzare/deserializzare una *JFX Image*  decomponendola e ricomponendola utilizzando una matrice di interi, in cui il generico elemento [ i, j ] contiene un intero a 32 bit che definisce il colore del pixel [ i, j ]. Il tutto possibile per mezzo di una istanza della classe **PixelReader**, ottenibile dalla JFX Image stessa. Classe necessaria perchè di base la classe *javafx.scene.image.Image* non è serializzabile.
 
 ```java
 public class SerializableImage implements Serializable {
@@ -191,6 +191,7 @@ public class SerializableImage implements Serializable {
 
     public SerializableImage() {}
 
+    //Costruisco la matrice di byte
     public void setImage(Image image) {
         width = ((int) image.getWidth());
         height = ((int) image.getHeight());
@@ -204,6 +205,7 @@ public class SerializableImage implements Serializable {
         }
     }
 
+    //scrivo i byte per definire l'immagine
     public Image getImage() {
         WritableImage img = new WritableImage(width, height);
         PixelWriter w = img.getPixelWriter();
@@ -220,23 +222,27 @@ public class SerializableImage implements Serializable {
 
 #
 ## PeerManager
-Singleton per la gestione del *Peer*, compresa la gestione della ricezione del messaggio per mezzo di una **inner class**.  
+**Singleton** per la gestione del *Peer*, compresa la gestione della ricezione del messaggio per mezzo di una **inner class**.  
 Mantiene un riferimento ad una istanza di **AnonymousChat** per eseguire le varie operazioni ed una HashMap la quale ha come chiavi i nomi delle chatroom, e come valore un riferimento ad un oggetto della classe **TextFlow**, che è l'elemento grafico che rappresenta la chat.
 
 Necessario l'uso di questo pattern per:
 - Mantenere le informazioni del *Peer* nei cambi scena;
-- La grafica permette la gestione di un solo peer per volta;
+- L'applicazione è stata progettata per la gestioe di un solo peer per volta in ciascuna istanza del programma;
 
 ```java
 public class PeerManager {
 
     class MessageListenerImpl implements MessageListener {
-            //vedremo in seguito
+            // ...vedremo in seguito ....
     }
 
     private static PeerManager instance;
     private AnonymousChatImpl peer = null;
 
+    /* modo in cui istanziare un Singleton in Java
+    *  senza invocare il costruttore, il quale servirà
+    *  solo per restituire la istanza
+    */
     static {
         try {
             instance = new PeerManager();
@@ -252,6 +258,7 @@ public class PeerManager {
 
     final private HashMap<String, TextFlow> chatJoined = new HashMap<>();
 
+    //inizializzazione dei dati del singleton
     public boolean init(int _id, String _master) throws Exception {
         if( id != -1  && master != null && peer != null) return false;
         id = _id;
@@ -265,6 +272,7 @@ public class PeerManager {
         return instance;
     }
 
+    //metodi ausiliari
     public AnonymousChatImpl getPeer(){ return peer;}
     public HashMap getChat() { return chatJoined; }
     public void addChat(String roomName, TextFlow chat) { chatJoined.put(roomName, chat); }
@@ -295,7 +303,10 @@ In primis, essendo la ricezione asincrona, mi devo assicurare di eseguire il tut
                 TextFlow chat = chatJoined.get(mss.getRoom());
                 Date date = new Date();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM, HH:mm");
+
+                //messaggio di default se ho inviato una immagine senza testo
                 Text message = new Text("Sending Image\n");
+
                 message.setFont(Font.font(20.0));
 
                 if(!mss.getMessage().isBlank())
@@ -309,6 +320,8 @@ In primis, essendo la ricezione asincrona, mi devo assicurare di eseguire il tut
                     image.setFitHeight(100);
                     image.setPreserveRatio(true);
                 }
+
+                //Determino l'orario/data di ricezione
                 Label hour = new Label(formatter.format(date));
                 hour.setPrefWidth(chat.getWidth() - 30.0);
                 hour.setAlignment(Pos.CENTER_RIGHT);
@@ -317,6 +330,8 @@ In primis, essendo la ricezione asincrona, mi devo assicurare di eseguire il tut
                 final Separator separator = new Separator(Orientation.HORIZONTAL);
                 separator.prefWidthProperty().bind(chat.widthProperty());
                 separator.setStyle("-fx-background-color: #484848;");
+                
+                //aggiungo al Texflow queste componenti
                 chat.getChildren().addAll(message, image, hour, separator);
 
             });
@@ -529,6 +544,34 @@ Rispetto al modello del progetto del professor Spagnuolo, sono state apporttate 
 - Installazione delle API *OpenGL*, utilizzate per la grafica da parte di JFX;
 - Copia di una cartella con immagini di test, per poter provare la funzionalità di invio di immagini;  
 
+```docker
+FROM alpine/git
+WORKDIR /app
+RUN git clone https://github.com/zioposty/AnonymousChatP2P.git
+
+FROM maven:3-jdk-13
+WORKDIR /app
+COPY --from=0 /app/AnonymousChatP2P /app
+RUN mvn package
+
+FROM openjdk:13.0.1-slim
+WORKDIR /app
+#Copia di immagini da poter usare nella chat
+COPY --from=1 /app/testImages /app
+#Setting delle variabili d'ambiente
+ENV MASTERIP=127.0.0.1
+ENV ID=0
+ENV DISPLAY=host.docker.internal:0.0
+COPY --from=1 /app/target/ac-1.0-jar-with-dependencies.jar /app
+
+#Installazione di OpenJFX e librerie grafiche
+RUN apt-get update && apt-get install -y --no-install-recommends openjfx && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install --no-install-recommends -y xorg libgl1-mesa-glx && rm -rf /var/lib/apt/lists/*
+RUN apt-get remove nvidia*
+
+CMD java -jar ac-1.0-jar-with-dependencies.jar ${ID} ${MASTERIP}
+```
+
 Date queste varie aggiunte, il processo di build risulta più lungo rispetto alla applicazione per il *Publish/Subscribe*.
 
 La build può essere effettuata, una volta giunti nella directory del progetto, con il comando:  
@@ -539,11 +582,26 @@ Si può procedere poi al lancio del *peer master*:
 
 - *MASTERIP*: variabile di ambiente che contiene l'iindirizzo del *master peer*;  
 - *ID*: identificativo del peer nella rete. ID = 0 è esclusivo del master;
-- *DISPLAY*: host in cui eseguire ed eventualmente indicare schermi e display su cui eseguire (vedere la sezione precedente per più info);
+- *DISPLAY*: host in cui eseguire ed eventualmente indicare schermi e display su cui eseguire (vedere la sezione precedente per più info);  
 
+In alternativa, per lanciare il *MASTER-PEER* si possono evitare di specificare i valori delle variabili d'ambiente *MASTERIP* e *ID*, poichè hanno valori di defualt settati per lanciare un Master Peer.
+
+Se non si deve specificare alcuni tipo di schermo o screen particolare, si può evitare di specificare la variabile di ambiente *DISPLAY* (Vale anche per i peer generici).  
+
+```docker run -i --name MASTER-PEER p2p-ac-client``` è equivalente al comando precedente.  
+
+#
 Per eseguire un generico peer bisogna prima verificare l'IP del master, verificabile con i seguenti passi:
 1. Lista dei container: ```docker ps```
 2. Controllo dell'IP del container *MASTER-PEER*: ```docker inspect <container ID>```
 
 Fatto questo si possono lanciare altri peer (importante che abbiamo un ID > 0):  
-```docker run -i --name PEER-1 -e DISPLAY=host.docker.internal:0.0 -e MASTERIP="172.17.0.2" -e ID=1 p2p-ac-client```
+```docker run -i --name PEER-1 -e DISPLAY=host.docker.internal:0.0 -e MASTERIP="172.17.0.2" -e ID=1 p2p-ac-client```.
+
+Se non si deve specificare alcuni tipo di schermo o screen particolare, si può evitare di specificare la variabile di ambiente *DISPLAY*.
+
+# Conclusioni e sviluppi futuri
+Sviluppare una applicazione P2P mi ha fatto capire quanto possono essere vari gli utilizzi e gli scenari in cui si possono impiegare, nonostante tali reti siano conosciute/utilizzate per il *File Sharing*.    
+Ho avuto modo di sviluppare una applicazione che mi ha permesso di utilizzare moltissime delle conoscenze apprese alla Magistrale (*Lock* e *Condition*, Containers, ecc...) e mi ha spinto a ragionare molto su come risolvere problemi che non avevo mai affrontato.
+
+Come possibili sviluppi futuri potrei cercare di ricreare tale progetto sottoforma di applicazione web opppure gestire meglio la dht aggiungendo anche uno storico degli ultimi X messaggi, in modo tale che un utente appena entrato nella stanza sia in grado di conoscere le ultime cose dette e non trovarsi fuori contesto.

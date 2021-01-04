@@ -1,7 +1,6 @@
 package it.isislab.p2p.anonymouschat;
 
 import it.isislab.p2p.anonymouschat.utilities.EmojiManager;
-import it.isislab.p2p.anonymouschat.utilities.MessageP2P;
 import it.isislab.p2p.anonymouschat.utilities.PeerManager;
 
 import it.isislab.p2p.anonymouschat.utilities.SceneManager;
